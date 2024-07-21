@@ -1,10 +1,20 @@
-import Image from "next/image";
+import { HomeNavigationMenu } from "@/section/home-nav";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-      <h1>준비중 입니다..</h1>
+    <main className="m-auto max-w-lg flex flex-col min-h-screen py-10">
+      <HomeNavigationMenu className="mb-4" />
+
+      <h1 className="font-bold text-lg mb-4">Yanguk</h1>
+
+      <div className='space-y-2'>
+        <section>
+          <p>Full-stack Web Developer</p>
+        </section>
+
+        <section>
+          <p>준비중 입니다...</p>
+        </section>
       </div>
     </main>
   );
