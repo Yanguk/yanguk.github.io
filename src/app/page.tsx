@@ -1,24 +1,19 @@
-import * as BaseLayout from "@/components/base-layout";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export default function Home() {
   return (
-    <BaseLayout.Container>
-      <BaseLayout.Header>
-        준비중
-      </BaseLayout.Header>
+    <div>
+      <h1>환영 합니다.</h1>
 
-      <BaseLayout.Body>
-        <div className="flex-col p-3 space-y-3 size-full">
-          <div>
-            <Button>
-              <Link href='/poc'>go To pixi</Link>
-            </Button>
-          </div>
-        </div>
-      </BaseLayout.Body>
-      <BaseLayout.Footer>footer</BaseLayout.Footer>
-    </BaseLayout.Container>
+      <div className="flex flex-col w-64 space-y-4">
+        <Button>
+          <Link href="/snap-tweak/poc">go To pixi</Link>
+        </Button>
+        <Button>
+          <Link href="/animation-optimize">go To anime</Link>
+        </Button>
+      </div>
+    </div>
   );
 }
