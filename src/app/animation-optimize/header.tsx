@@ -16,11 +16,11 @@ export default function Header() {
 
   return (
     <div className="flex flex-row justify-between w-full items-center border-b-black border">
-      <Button>
+      <Button asChild>
         <Link href={prevPage}>{"<"}</Link>
       </Button>
       <h1>title</h1>
-      <Button>
+      <Button asChild>
         <Link href={nextPage}>{">"}</Link>
       </Button>
     </div>
