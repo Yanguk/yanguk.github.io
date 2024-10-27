@@ -18,7 +18,7 @@ export default function Page3() {
     <>
       <Header title={"Carousel 비교"} />
 
-      <Body className="flex flex-col space-y-3">
+      <Body className="flex flex-col space-y-3 h-fit">
         <TypographyH2>embla-carousel</TypographyH2>
 
         <Carousel orientation="horizontal">
@@ -31,6 +31,7 @@ export default function Page3() {
                       <Image
                         width={350}
                         height={350}
+                        priority
                         alt="photo"
                         src={`https://picsum.photos/id/${index}/300`}
                       />
@@ -48,10 +49,26 @@ export default function Page3() {
         <br />
 
         <TypographyH2>CSS</TypographyH2>
-        <CustomCarousel.Root className="w-full border border-gray-300">
+
+        <CustomCarousel.Root className="w-full">
           <CustomCarousel.Content>
             {Array.from({ length: 10 }).map((_, index) => (
-              <CustomCarousel.Item key={index}>item</CustomCarousel.Item>
+              <CustomCarousel.Item key={index}>
+                <div className="p-1">
+                  <Card>
+                    <CardContent className="p-6 items-center flex flex-col">
+                      <Image
+                        width={350}
+                        height={350}
+                        priority
+                        alt="photo"
+                        src={`https://picsum.photos/id/${index}/300`}
+                      />
+                      <TypographyH4>Test!! {index}</TypographyH4>
+                    </CardContent>
+                  </Card>
+                </div>
+              </CustomCarousel.Item>
             ))}
           </CustomCarousel.Content>
 
