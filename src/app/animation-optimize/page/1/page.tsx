@@ -1,12 +1,12 @@
-import Header from '@/app/animation-optimize/header'
-import React from 'react'
+import Body from "@/app/animation-optimize/body";
+import Header from "@/app/animation-optimize/header";
+import React from "react";
 
-export default function Page() {
+export default function Page1() {
   return (
     <>
-      <Header />
-      <h1>page1</h1>
+      <Header title={"CSS-transition"} />
+      <Body>page1</Body>
     </>
-  )
+  );
 }
-
