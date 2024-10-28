@@ -56,12 +56,20 @@ export default function Page() {
       <br />
 
       <TypographyH3>CSS</TypographyH3>
+      <TypographyBlockquote>
+        CSS 는 Bezier Curve 애니메이션, duration, curve
+      </TypographyBlockquote>
       <TypographyUl>
         <li>transition</li>
         <li>keyframe animation</li>
       </TypographyUl>
 
+      <br />
+
       <TypographyH3>JS</TypographyH3>
+      <TypographyBlockquote>
+        좀더 자연스러운 물리엔진이 적용된 Spring 애니메이션 사용 가능
+      </TypographyBlockquote>
       <TypographyUl>
         <li>setInterval (옛날 방식)</li>
         <li>requestAnimationFrame</li>
@@ -74,6 +82,17 @@ export default function Page() {
           <p>최신 애니메이션 라이브러리에서 사용하는 방식</p>
           <p>framer-motion, react-spring, embla-carousel</p>
         </TypographyBlockquote>
+      </TypographyUl>
+
+      <br />
+
+      <TypographyH2>다른 방법</TypographyH2>
+
+      <br />
+
+      <TypographyH3>WebGL</TypographyH3>
+      <TypographyUl>
+        <li>pixijs</li>
       </TypographyUl>
 
       <Button asChild>
