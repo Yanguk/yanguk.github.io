@@ -75,7 +75,7 @@ export function Content({ children }: PropsWithChildren) {
     }
 
     const translateValue = -curIdx * (100 / childCount);
-    ref.current.style.transform = `translateX(${translateValue}%)`;
+    ref.current.style.transform = `translate3d(${translateValue}%, 0, 0)`;
   }, [childCount, curIdx, ref]);
 
   return (
@@ -94,9 +94,7 @@ export function Content({ children }: PropsWithChildren) {
 export function Item({ children }: PropsWithChildren) {
   return (
     <div
-      style={{
-        width: "100%",
-      }}
+      className='w-full'
     >
       {children}
     </div>
