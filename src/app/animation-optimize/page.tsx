@@ -47,10 +47,16 @@ export default function Page() {
             offsetTop, ... (최신 위치를 가져오기위해 읽기가 큐에 들어가게됨.)
           </li>
         </TypographyUl>
+
+        <li>성능 개선 속성</li>
+        <TypographyUl>
+          <li>
+            translate 대신 translate3d 사용 (GPU 가속화)
+          </li>
+        </TypographyUl>
       </TypographyUl>
 
       <br />
-
       <TypographyH2>애니메이션 효과 주는법</TypographyH2>
 
       <br />

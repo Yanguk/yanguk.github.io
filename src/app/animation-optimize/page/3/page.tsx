@@ -48,7 +48,7 @@ export default function Page3() {
 
         <br />
 
-        <TypographyH2>CSS</TypographyH2>
+        <TypographyH2>CSS, 드래그는 미구현 이지만 scroll로 처리하면 될듯..?</TypographyH2>
 
         <CustomCarousel.Root className="w-full">
           <CustomCarousel.Content>

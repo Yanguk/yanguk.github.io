@@ -21,9 +21,11 @@ export default function Page4() {
   );
 }
 
+let down = false;
+let left = false;
+
 function Donggle() {
   const ref = useRef<HTMLImageElement | null>(null);
-  const [turnLeft, setTurnLeft] = useState(false);
 
   useEffect(() => {
     const m = ref.current;
@@ -38,17 +40,27 @@ function Donggle() {
         m.style.left.slice(0, m.style.left.indexOf("px")),
       );
 
-      m.style.top = `${pos + 1}px`;
+      const topPos = down ? pos + 1 : pos - 1;
+
+      m.style.top = `${topPos}px`;
+
+      if (topPos > 200) {
+        down = false;
+      }
+
+      if (topPos < 0) {
+        down = true;
+      }
 
       if (leftPos > 200) {
-        setTurnLeft(true);
+        left = true
       }
 
       if (leftPos < 0) {
-        setTurnLeft(false);
+        left = false
       }
 
-      m.style.left = turnLeft ? `${leftPos - 1}px` : `${leftPos + 1}px`;
+      m.style.left = left ? `${leftPos - 1}px` : `${leftPos + 1}px`;
 
       window.requestAnimationFrame(animate);
     };
@@ -58,7 +70,7 @@ function Donggle() {
     return () => {
       window.cancelAnimationFrame(ani);
     };
-  }, [ref, turnLeft]);
+  }, [ref]);
 
   return (
     <Image
