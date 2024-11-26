@@ -1,11 +1,12 @@
 'use client'
 
-import { createContext, Dispatch, PropsWithChildren, useContext, useReducer } from 'react'
+import { Dispatch, PropsWithChildren, useContext, useReducer, createContext } from 'react'
 import { Button } from '@/components/ui/button'
+import { createSelectorContext, useContextSelector } from './useContextSelector';
 
 type State = { value: string[], description: string }
 
-const TasksContext = createContext<State>({
+const TasksContext = createSelectorContext<State>({
   value: [],
   description: 'good'
 });
@@ -43,13 +44,8 @@ function Provider({ children }: PropsWithChildren) {
   )
 }
 
-const useValContext = () => {
-  const context = useContext(TasksContext);
-
-  if (!context) {
-    throw new Error('useContext must be used within a Provider')
-  }
-  return context;
+const useValContext = <R,>(selector: (s: State) => R) => {
+  return useContextSelector(TasksContext, selector);
 }
 
 const useDispatchContext = () => {
@@ -61,7 +57,6 @@ const useDispatchContext = () => {
 }
 
 export default function Page() {
-  console.log('page')
   return (
     <Provider>
       <Title />
@@ -78,14 +73,12 @@ export default function Page() {
 let j = 1;
 
 function Descriptoin() {
-  const { description } = useValContext();
+  const description = useValContext(v => v.description);
   console.log('description render!!')
   return <h1>{description}</h1>
 }
 
 function EditDescriptButton() {
-
-
   const dispatch = useDispatchContext();
   console.log('EditDescript render!!')
 
@@ -113,7 +106,7 @@ function Title() {
 }
 
 function Tasks() {
-  const { value: tasks } = useValContext();
+  const tasks = useValContext(v => v.value);
 
   console.log('task render!!')
 

@@ -17,6 +17,10 @@ export default function Home() {
         <Button asChild>
           <Link href="/context">go To context</Link>
         </Button>
+
+        <Button asChild>
+          <Link href="/custom-context">go To custom-context</Link>
+        </Button>
       </div>
     </div>
   );
