@@ -69,6 +69,20 @@ export default function Page5() {
 
           box Shadow들어간 box는 png로 처리 하면 훨씬 빨라짐. css 보단 이미지로...
         </TypographyP>
+
+        <br />
+
+        <TypographyH2>react context api {'->'} zustand</TypographyH2>
+        <TypographyP>
+          react context api 간편하고 기본값 지정 가능하여 지역적으로 props drilling 없이 편하게 쓸수있지만,
+          <br />
+          selector가 없어서 불필요한 렌더링이 발생할 수 있음. 큰규모에서는 성능이슈가 따라옴.
+
+          <br />
+          zustand로 변경하여 사용하면 개선이 될 수 있음.
+          <br />
+          https://zustand.docs.pmnd.rs/guides/initialize-state-with-props
+        </TypographyP>
       </Body>
     </>
   );
