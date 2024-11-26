@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import {
   Context,
@@ -9,19 +9,22 @@ import {
   useLayoutEffect,
   useRef,
   useSyncExternalStore,
-} from 'react';
+} from "react";
 
 const createStore = <T,>(value: T) => {
   const listeners = new Set();
 
   return {
     value,
-    subscribe: (l: any) => { listeners.add(l); return () => listeners.delete(l); },
+    subscribe: (l: any) => {
+      listeners.add(l);
+      return () => listeners.delete(l);
+    },
     notify: () => listeners.forEach((l: any) => l()),
-  }
-}
+  };
+};
 
-type Store<T> = ReturnType<typeof createStore<T>>
+type Store<T> = ReturnType<typeof createStore<T>>;
 
 export const createSelectorContext = <T,>(defaultValue: T) => {
   const context = createContextOrig<Store<T> | null>(null);
@@ -29,47 +32,49 @@ export const createSelectorContext = <T,>(defaultValue: T) => {
   const ProviderOrig = context.Provider;
 
   //@ts-ignore
-  context.Provider = ({
+  context.Provider = function Provider({
     value,
     children,
-  }: PropsWithChildren<{ value: T }>) => {
+  }: PropsWithChildren<{ value: T }>) {
     const storeRef = useRef<Store<T> | null>(null);
 
-    let store = storeRef.current;
-
-    if (!store) {
-      store = createStore(value)
-
-      storeRef.current = store;
+    if (!storeRef.current) {
+      storeRef.current = createStore(value);
     }
 
-    useEffect(() => {
+    useLayoutEffect(() => {
+      if (!storeRef.current) {
+        return;
+      }
+
+      const store = storeRef.current;
+
       if (!Object.is(store?.value, value)) {
         store.value = value;
         store.notify();
       }
     }, [value]);
 
-    return <ProviderOrig value={store}>{children}</ProviderOrig>;
+    return <ProviderOrig value={storeRef.current}>{children}</ProviderOrig>;
   };
 
-  return context as unknown as Context<T>
-}
+  return context as unknown as Context<T>;
+};
 
 export const useContextSelector = <T, U>(
   context: Context<T>,
-  selector: (value: T) => U
+  selector: (value: T) => U,
 ) => {
-  const value = useContextOrig(context)
+  const value = useContextOrig(context);
 
   if (!value) {
-    throw new Error('useContextSelector must be used within a Provider');
+    throw new Error("useContextSelector must be used within a Provider");
   }
 
-  const store = value as unknown as Store<T>
+  const store = value as unknown as Store<T>;
 
   if (!store.subscribe || !store.value) {
-    throw new Error('context must be made by createSelectorContext');
+    throw new Error("context must be made by createSelectorContext");
   }
 
   return useSyncExternalStore(

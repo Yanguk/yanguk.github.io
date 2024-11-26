@@ -1,6 +1,6 @@
 'use client'
 
-import { Dispatch, PropsWithChildren, useContext, useReducer, createContext } from 'react'
+import { Dispatch, PropsWithChildren, useContext, useReducer, createContext, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { createSelectorContext, useContextSelector } from './useContextSelector';
 
@@ -27,13 +27,19 @@ const taskReducer = (state: State, action: Action) => {
 }
 
 function Provider({ children }: PropsWithChildren) {
+  const [count, setCount] = useState(0)
   const [tasks, dispatch] = useReducer(taskReducer, {
     value: ['tet', 'asdf', 'dsfeee', 'ewefwefew', 'wefewfwefewf'],
     description: 'good'
   });
 
+  console.log('provider render!!')
+
   return (
     <TasksContext.Provider value={tasks}>
+      <Button onClick={() => setCount(count + 1)}>
+        count: {count}
+      </Button>
       <TasksDispatchContext.Provider value={dispatch}>
         {children}
       </TasksDispatchContext.Provider>
