@@ -1,3 +1,5 @@
+'use client'
+
 import {
   Context,
   createContext as createContextOrig,
@@ -41,7 +43,7 @@ export const createSelectorContext = <T,>(defaultValue: T) => {
       storeRef.current = store;
     }
 
-    useLayoutEffect(() => {
+    useEffect(() => {
       if (!Object.is(store?.value, value)) {
         store.value = value;
         store.notify();
@@ -66,12 +68,13 @@ export const useContextSelector = <T, U>(
 
   const store = value as unknown as Store<T>
 
-  if (!store.subscribe) {
+  if (!store.subscribe || !store.value) {
     throw new Error('context must be made by createSelectorContext');
   }
 
   return useSyncExternalStore(
     store.subscribe,
+    () => selector(store.value),
     () => selector(store.value),
   );
 };
