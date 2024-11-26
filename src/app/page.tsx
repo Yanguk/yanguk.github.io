@@ -13,6 +13,10 @@ export default function Home() {
         <Button asChild>
           <Link href="/animation-optimize">go To anime</Link>
         </Button>
+
+        <Button asChild>
+          <Link href="/context">go To context</Link>
+        </Button>
       </div>
     </div>
   );
