@@ -1,10 +1,10 @@
 # Links
 
-Below are the most important links related to SkunkHTML:
+Contact Me:
 
-* SkunkHTML repository on GitHub
-[https://github.com/MaxGripe/skunk-html](https://github.com/MaxGripe/skunk-html)
-* Discussions
-[https://github.com/MaxGripe/skunk-html/discussions](https://github.com/MaxGripe/skunk-html/discussions)
-* Issues
-[https://github.com/MaxGripe/skunk-html/issues](https://github.com/MaxGripe/skunk-html/issues)
+- GitHub
+  [https://github.com/Yanguk](https://github.com/Yanguk)
+- Email
+  [yanguk@duck.com](yanguk@duck.com)
+- 질의응답 (추후 댓글연동 추가 예정)
+  [https://github.com/Yanguk/issues](https://github.com/Yanguk/issues)
