@@ -1,4 +1,3 @@
-
 ![GitHub repo size](https://img.shields.io/github/repo-size/MaxGripe/skunk-html)
 ![GitHub License](https://img.shields.io/github/license/MaxGripe/skunk-html)
 ![GitHub Created At](https://img.shields.io/github/created-at/MaxGripe/skunk-html)
@@ -14,6 +13,7 @@ Automatically generate a website on GitHub Pages using Markdown files as the sou
 Markdown in, GitHub Pages out!
 
 ## SkunkHTML setup
+
 Your own Markdown blog on GitHub in under 60 seconds:
 
 1. Fork [SkunkHTML](https://github.com/MaxGripe/skunk-html) repository on GitHub.
@@ -40,15 +40,15 @@ When a Markdown (.md) file is created and placed in the `/markdown-blog/` folder
 
 - `/`: Root directory of the project.
 
-    - `.github/workflows/`: GitHub Actions workflow file. Responsible for automatically generating final website on GitHub Pages
-    - `assets/`: Files used across the entire site, such as the avatar, favicon, and other shared resources.
-    - `css/`: CSS files for the site.
-    - `fonts/`: Custom fonts go here.
-    - `html/`: HTML fragments used throughout the site, such as the title and footer.
-    - `markdown-blog/`: Directory containing the Markdown files for articles and other content. Blog articles are identified by file names that start with a digit.
-        - `images/`:  Images used in the articles.
-    - `scripts/`: Syntax highlighting script and optionally other custom scripts..
-    - `skunk-html-output/`: Directory that will be created during the build process, with the generated HTML files.
+  - `.github/workflows/`: GitHub Actions workflow file. Responsible for automatically generating final website on GitHub Pages
+  - `assets/`: Files used across the entire site, such as the avatar, favicon, and other shared resources.
+  - `css/`: CSS files for the site.
+  - `fonts/`: Custom fonts go here.
+  - `html/`: HTML fragments used throughout the site, such as the title and footer.
+  - `markdown-blog/`: Directory containing the Markdown files for articles and other content. Blog articles are identified by file names that start with a digit.
+    - `images/`: Images used in the articles.
+  - `scripts/`: Syntax highlighting script and optionally other custom scripts..
+  - `skunk-html-output/`: Directory that will be created during the build process, with the generated HTML files.
 
 - `LICENSE`: License file for the project.
 - `Program.fs`: F# program that handles the generation of HTML from Markdown
@@ -77,12 +77,14 @@ It also uses some external stuff, each with its own license:
 
 Although GitHub builds and hosts this site excellently, if you really want to, you can build your blog locally, for example to host it yourself. To do this:
 
-1. [Download](https://dotnet.microsoft.com/en-us/download) and install .NET on Linux / macOS / Windows 
+1. [Download](https://dotnet.microsoft.com/en-us/download) and install .NET on Linux / macOS / Windows
 2. Run the following commands
+
 ```
 git clone https://github.com/MaxGripe/skunk-html.git
 cd skunk-html
 dotnet restore
 dotnet run
 ```
+
 3. Done. Your site is in the `skunk-html-output` folder.
