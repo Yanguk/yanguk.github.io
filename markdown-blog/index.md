@@ -1,5 +1,3 @@
-# Welcome to Yanguk bolg
+# 개발자의 만화경
 
-SkunkHTML로 만들어진
-
-웹 개발자의 블로그 입니다.
+領域展開
