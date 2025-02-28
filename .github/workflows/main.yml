@@ -25,6 +25,11 @@ jobs:
       # google search
       - name: Include google search html
         run: mv googledfcd550dc68521fe.html ./skunk-html-output/
+      - name: Generate sitemap.xml
+        uses: cicirello/generate-sitemap@v1
+        with:
+          path-to-root: ./skunk-html-output/
+          base-url-path: https://yanguk.github.io
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -32,4 +37,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
