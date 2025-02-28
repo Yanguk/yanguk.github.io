@@ -1,12 +1,10 @@
 name: Deploy to GitHub Pages
-
 on:
   push:
-    branches: [ "master" ]
+    branches: ["master"]
   pull_request:
-    branches: [ "master" ]
+    branches: ["master"]
   workflow_dispatch:
-
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
@@ -16,23 +14,22 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 9
-
       - name: Build project
         run: dotnet build skunk-html.fsproj
-
       - name: Run F# code to generate HTML
         run: dotnet run --project skunk-html.fsproj
-
+      # google search
+      - name: Include google search html
+        run: mv googledfcd550dc68521fe.html ./skunk-html-output/
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: "./skunk-html-output"
-
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
