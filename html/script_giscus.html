@@ -1,35 +1,37 @@
-﻿<script>
-  // 사용자의 다크 모드 설정을 감지하는 함수
+﻿<script
+  src="https://giscus.app/client.js"
+  data-repo="yanguk/yanguk.github.io"
+  data-repo-id="R_kgDONvaxZw"
+  data-category="Announcements"
+  data-category-id="DIC_kwDONvaxZ84Cm-yk"
+  data-mapping="pathname"
+  data-strict="1"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="light"
+  data-lang="en"
+  crossorigin="anonymous"
+  async
+></script>
+
+<script>
   function getPreferredTheme() {
     return window.matchMedia &&
       window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
+      ? "gruvbox_dark"
       : "light";
   }
 
-  // Giscus 스크립트를 동적으로 생성하는 함수
-  function loadGiscus() {
-    const theme = getPreferredTheme();
-    const script = document.createElement("script");
-
-    script.src = "https://giscus.app/client.js";
-    script.setAttribute("data-repo", "yanguk/yanguk.github.io");
-    script.setAttribute("data-repo-id", "R_kgDONvaxZw");
-    script.setAttribute("data-category", "Announcements");
-    script.setAttribute("data-category-id", "DIC_kwDONvaxZ84Cm-yk");
-    script.setAttribute("data-mapping", "pathname");
-    script.setAttribute("data-strict", "1");
-    script.setAttribute("data-reactions-enabled", "1");
-    script.setAttribute("data-emit-metadata", "0");
-    script.setAttribute("data-input-position", "bottom");
-    script.setAttribute("data-theme", theme); // 다크 모드에 따라 테마 설정
-    script.setAttribute("data-lang", "en");
-    script.setAttribute("crossorigin", "anonymous");
-    script.async = true;
-
-    document.body.appendChild(script);
+  function sendMessage(message) {
+    const iframe = document.querySelector("iframe.giscus-frame");
+    if (!iframe) return;
+    iframe.contentWindow.postMessage({ giscus: message }, "https://giscus.app");
   }
 
-  // 페이지가 로드될 때 Giscus 스크립트를 로드
-  window.onload = loadGiscus;
+  sendMessage({
+    setConfig: {
+      theme: getPreferredTheme(),
+    },
+  });
 </script>
