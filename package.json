@@ -1,6 +1,7 @@
 {
-  "name": "tailwind-nextjs-starter-blog",
-  "version": "2.4.0",
+  "name": "yanguk-blog",
+  "version": "0.0.1",
+  "author": "yanguk@duck.com",
   "private": true,
   "scripts": {
     "start": "next dev",
