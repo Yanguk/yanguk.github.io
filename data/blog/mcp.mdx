@@ -1,0 +1,93 @@
+---
+title: 빠르게 발전하는 AI! MCP를 사용해보자
+date: '2025-03-31'
+tags: ['tool', 'ai']
+draft: false
+summary: 요즘 핫한 mcp 다루기
+---
+
+`Model context protocol`의 약자로 MCP 라는게 거의 표준처럼 발전하고있다.  
+LSP서버가 생각이나는데, 이것도 마찬가지로 `JSON-RPC`로 통신한다.
+
+## MCP란?
+
+AI모델을 다른 앱들과 통합하는데에 있어서 통신하는 규약이다.
+MCP 이전에 AI 사용하는 방법에 있어서는 AI가 사용할수 있는 툴들을 정의를 해서 넘겨주면,  
+AI가 판단을 하고, 해당 툴을 사용해서 코드를 실행한다던지, 파일을 만들다던지 등의 행위를 할수가 있었다.
+
+```ts
+// openAi 예제
+const file = await openai.files.create({
+  file: fs.createReadStream("mydata.csv"),
+  purpose: "assistants",
+});
+
+// Create an assistant using the file ID
+const assistant = await openai.beta.assistants.create({
+  instructions:
+    "You are a personal math tutor. When asked a math question, write and run code to answer the question.",
+  model: "gpt-4o",
+  tools: [{ type: "code_interpreter" }],
+  tool_resources: {
+    code_interpreter: {
+      file_ids: [file.id],
+    },
+  },
+});
+```
+
+> 위코드는 openAi에서 제공되는 예제로써, tools에 어떤 기능을 사용할지 정의하고 등록할 수가 있다.
+
+이러한 툴들을 다른 앱에서도 사용할수 있게 모듈화가 되었고, 툴과 앱이 소통하기 위해 MCP가 나온 것 이다.
+
+
+## MCP 사용법
+
+[MCP repo](https://github.com/modelcontextprotocol)
+
+MCP를 만드는건 나중에 해보기로하고 사용하는방법에 대해 이야기 해본다.  
+일단 개발자 기준으로 에디터에 통합하는방법에 대해서 이야기를 해볼거다.
+
+```json
+{
+  "mcpServers": {
+    "Framelink Figma MCP": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "figma-developer-mcp",
+        "--figma-api-key=YOUR-KEY",
+        "--stdio"
+      ]
+    }
+  }
+}
+```
+
+현재 지원되는 에디터는 cursor, zed 정도로 알고있는데 해당 설정파일을 작성해주면 설정은 끝이다.  
+그러면 에디터가 mcp 서버를 실행시키고 설정된 파일에 따라 mcp서버와 소통을 할 것이다.
+
+## 사용해보자.
+
+### 셋업하기
+
+필자는 [neovim](https://neovim.io/)에디터와 [avante.nvim](https://github.com/yetone/avante.nvim)라는 ai 통합 플러그인을 사용한다.  
+여기에 mcp를 관리하고 사용할수있게 도와주는 플러그인이 있다. [mcphub.nvim](https://github.com/ravitemer/mcphub.nvim)
+
+시간 관계상 이미지는 생략하고 글로 설명 하겠다.  
+해당 플러그인설치후 실행하고 나오는 ui에서 mcp목록들 조회가 가능한데, 바로 설치할 수가 있다.
+
+### 사용하기
+`Sequential Thinking` mcp로 예를 들겠다.
+설치후 서버가 활성화 되었다면 ai에게 명령한다.
+```
+user: Sequential Thinking툴을 이용해서 ***해줘
+```
+그러면 고민을 심각하게 오래하고 답변을 해준다.
+
+
+## 마무리
+
+이미 개발된 mcp 서버들을 모아논 [레포](https://github.com/modelcontextprotocol/servers)가 있다.
+
+나도 하나 만들어서 저 목록에 내께 있었으면 좋을텐데... 라는 생각을 해보며 마무리 한다.
