@@ -6,7 +6,7 @@ const siteMetadata = {
   description: 'Web Developer Blog',
   language: 'ko-KR',
   theme: 'system', // system, dark or light
-  siteUrl: 'https://yanguk.github.io/',
+  siteUrl: 'https://yanguk.github.io',
   siteRepo: 'https://github.com/Yanguk/yanguk.github.io',
   siteLogo: `${process.env.BASE_PATH || ''}/static/images/developer-cat.png`,
   socialBanner: `${process.env.BASE_PATH || ''}/static/images/twitter-card.png`,
