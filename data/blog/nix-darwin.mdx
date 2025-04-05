@@ -1,0 +1,248 @@
+---
+title: Nix-Darwin로 패키지와 내 맥북설정 관리하기
+date: '2025-04-05'
+tags: ['tool']
+draft: false
+summary: Nix-Darwin 적용기
+---
+
+<img
+  src="/static/images/nix-darwin.png"
+  alt="NixOs"
+  width="300"
+  height="auto"
+/>
+
+# Nix-Darwin
+
+[Nix-darwin](https://github.com/nix-darwin/nix-darwin)은 NixOS의 Mac 버전이다.
+
+그럼 NixOS는 무엇이냐면 Nix원칙 에 기반한 리눅스 배포판이다.
+
+그럼 [Nix](https://nixos.org)는 뭔가 싶은데,
+
+Nix는 선언적이고 재현 가능한 패키지 관리자이자 시스템 구성 도구이며 순수 함수형 언어이다.
+
+## 사용하는 이유
+개발 짬밥이 생기면서 새로운 맥북으로 갈아타게 되면 해야하는 초기 셋팅이 존재한다.
+- 부트음 끄기
+- 캡스락 컨트롤로 변경하기
+- 키 입력 속도 빠르게 변경하기
+- 트랙패드 터치로 클릭 활성화하기
+- 배터리 표시량 보이게 하기
+- 터미널 꾸미기
+- 개발 패키지 설치하기
+  - neovim
+  - ripgrep
+  - orbstack
+  - ...
+
+이거를 언제 다 설정 들어가서 클릭하고, 패키지 하나하나 찾아서 설치하고... 너무 귀찮지 않은가  
+nix로 설정파일을 작성해두면 **nix-build 명령어 한방**으로 설정이 끝난다.  
+aws의 테라폼과 같다고 생각하면 된다.
+
+## 시작하기
+
+[Nix-darwin](https://github.com/nix-darwin/nix-darwin)의 리드미에 친절히 안내되어있다.
+
+1. nix설치 (determinate버전에 flakes가 권장된다.)
+> determinate는 nix설치를 간소화한 버전이고  
+> flakes는 nix를 설정하는 방식이라고 보면 되는데, 기존 channel 방식에서 flakes로 바뀌는 추세이다.
+
+2. config 설정 ([docs](https://nix-darwin.github.io/nix-darwin/manual/index.html))
+```nix
+# 제꺼 가져왔어요
+# ~/.config/nix/flake.nix
+{
+  description = "yanguk nix-darwin system flake";
+
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nix-darwin.url = "github:nix-darwin/nix-darwin/master";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+    # nix패키지에 없는 앱들도 있고, 앱 업데이트는 homebrew가 빨리 반영되어서 homebrew도 같이 사용한다.
+    nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
+  };
+
+  outputs =
+    inputs@{
+      self,
+      nix-darwin,
+      nixpkgs,
+      nix-homebrew,
+    }:
+    let
+      username = "yanguk";
+      configuration =
+        { pkgs, ... }:
+        {
+          nix = {
+            enable = false;
+            settings = {
+              experimental-features = "nix-command flakes";
+            };
+          };
+
+          nixpkgs = {
+            config = {
+              allowUnfree = true;
+            };
+            hostPlatform = "aarch64-darwin";
+          };
+
+          # 사용하는 개발툴 목록 nix-search 페이지에서 목록 조회가능
+          environment.systemPackages = with pkgs; [
+            imagemagick
+            pngpaste
+
+            # zsh
+            zsh-fast-syntax-highlighting
+            zsh-autosuggestions
+            oh-my-zsh
+            zoxide
+
+            nixfmt-rfc-style
+            lazygit
+            delta
+            bat
+            direnv
+            fzf
+            terraform
+            terraform-local
+            awscli2
+            ripgrep
+            wget
+            gnupg
+            gh
+            ddgr
+            bottom
+            yazi
+
+            deno
+            rustup
+            uv
+          ];
+
+          fonts.packages = with pkgs; [
+            nerd-fonts.hack
+          ];
+
+          # homebrew로 설치할 툴들
+          # 설정파일을 통해 선언식으로 패키지를 관리하니까 얼마나 좋은가!!!
+          homebrew = {
+            enable = true;
+            brews = [
+              "awscli-local"
+              "nvm"
+              "zig"
+              "neovim"
+            ];
+            casks = [
+              "duckduckgo"
+              "orbStack"
+              "font-noto-sans-cjk-kr"
+              "ghostty"
+              "figma"
+              "google-chrome"
+              "obsidian"
+              "slack"
+              "raycast"
+              "rectangle"
+              "hammerspoon"
+              "visual-studio-code"
+            ];
+            masApps = {
+              "kakaotalk" = 869223134;
+            };
+            # 선언되지 않은 패키지는 삭제도 자동으로 해준다
+            onActivation.cleanup = "zap";
+            onActivation.autoUpdate = true;
+            onActivation.upgrade = true;
+          };
+
+          system = {
+            # Set Git commit hash for darwin-version.
+            configurationRevision = self.rev or self.dirtyRev or null;
+
+            # Used for backwards compatibility, please read the changelog before changing.
+            # $ darwin-rebuild changelog
+            stateVersion = 6;
+
+            # 캡스락을 컨트롤로 변경
+            keyboard = {
+              enableKeyMapping = true;
+              remapCapsLockToControl = true;
+            };
+
+            defaults = {
+              # 트랙패드 클릭 활성화, 세손가락 드래그 활성화
+              trackpad = {
+                Clicking = true;
+                TrackpadThreeFingerDrag = true;
+              };
+
+              # 배터리 퍼센트 표시
+              controlcenter = {
+                BatteryShowPercentage = true;
+              };
+
+              # 키 응답 속도 조절, 비트음 끄기
+              NSGlobalDomain = {
+                # 120, 90, 60, 30, 12, 6, 2
+                KeyRepeat = 2;
+
+                # 120, 94, 68, 35, 25, 15
+                InitialKeyRepeat = 15;
+                "com.apple.mouse.tapBehavior" = 1;
+                "com.apple.sound.beep.volume" = 0.0;
+                "com.apple.sound.beep.feedback" = 0;
+
+                NSAutomaticQuoteSubstitutionEnabled = false;
+                NSAutomaticDashSubstitutionEnabled = false;
+                # 맥에서 기본적으로 꾹눌러서 연속입력이 안되는데 해당옵션끄면 가능해짐
+                ApplePressAndHoldEnabled = false;
+              };
+
+              # 빔을 쓰다보니 키맵핑을 커스텀하는데, config파일 관리를위해 기본경로를 변경함
+              CustomUserPreferences = {
+                "org.hammerspoon.Hammerspoon" = {
+                  MJConfigFile = "~/.config/hammerspoon/init.lua";
+                };
+              };
+            };
+          };
+        };
+    in
+    {
+      # Build darwin flake using:
+      # $ darwin-rebuild build --flake .#yanguk
+      darwinConfigurations.${username} = nix-darwin.lib.darwinSystem {
+        modules = [
+          configuration
+          nix-homebrew.darwinModules.nix-homebrew
+          {
+            nix-homebrew = {
+              enable = true;
+              # User owning the Homebrew prefix
+              user = username;
+            };
+          }
+        ];
+      };
+    };
+}
+```
+
+3. 실행하기
+
+`nix run nix-darwin/master#darwin-rebuild -- switch --flake ~/.config/nix#yanguk`  
+위 커먼드 실행하면 내 맥북 셋팅은 끝난다.
+
+이제 같은 환경의 맥 찍어내기가 바로바로 가능해졌다. 👍 <img
+  src="/static/images/cat-naruto.gif"
+  alt="Cat Naruto Animation"
+  width="16"
+  height="auto"
+  className="inline"
+/>
+
