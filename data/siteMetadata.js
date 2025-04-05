@@ -2,8 +2,8 @@
 const siteMetadata = {
   title: 'yanguk Blog',
   author: 'yanguk',
-  headerTitle: 'yanguk blog',
-  description: 'web developer blog',
+  headerTitle: 'Blog',
+  description: 'Web Developer Blog',
   language: 'en-us',
   theme: 'system', // system, dark or light
   siteUrl: 'https://tailwind-nextjs-starter-blog.vercel.app',
