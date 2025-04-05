@@ -16,7 +16,7 @@ const projectsData: Project[] = [
     title: 'Circle',
     description: `WebRTC와 Socket.io를 기반으로 구현된 실시간 음성 채팅 서비스입니다.`,
     imgSrc: '/static/images/circle-project.png',
-    href: 'https://github.com/orgs/Team-TTT/repositories',
+    href: 'https://github.com/Team-TTT/Circle-Service-FE',
   },
 ]
 
