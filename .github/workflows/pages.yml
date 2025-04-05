@@ -1,20 +1,16 @@
 # Inspired from https://github.com/actions/starter-workflows/blob/main/pages/nextjs.yml
 name: GitHub Pages
-
 on:
   push:
     branches: main
   workflow_dispatch:
-
 permissions:
   contents: read
   pages: write
   id-token: write
-
 concurrency:
   group: 'pages'
   cancel-in-progress: false
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -39,10 +35,13 @@ jobs:
           EXPORT: 1
           UNOPTIMIZED: 1
           BASE_PATH: ${{ steps.configurepages.outputs.base_path }}
+          NEXT_PUBLIC_GISCUS_REPO: Yanguk/yanguk.github.io
+          NEXT_PUBLIC_GISCUS_REPOSITORY_ID: R_kgDOOTbFyQ
+          NEXT_PUBLIC_GISCUS_CATEGORY: comment
+          NEXT_PUBLIC_GISCUS_CATEGORY_ID: DIC_kwDOOTbFyc4CozSd
       - uses: actions/upload-pages-artifact@v3
         with:
           path: ./out
-
   # Deployment job
   deploy:
     environment:

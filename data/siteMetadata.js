@@ -2,7 +2,7 @@
 const siteMetadata = {
   title: 'yanguk Blog',
   author: 'yanguk',
-  headerTitle: 'Blog',
+  headerTitle: 'Yanguk',
   description: 'Web Developer Blog',
   language: 'en-us',
   theme: 'system', // system, dark or light
@@ -49,11 +49,11 @@ const siteMetadata = {
     //   googleAnalyticsId: '', // e.g. G-XXXXXXX
     // },
   },
-  newsletter: {
-    // supports mailchimp, buttondown, convertkit, klaviyo, revue, emailoctopus, beehive
-    // Please add your .env file and modify it according to your selection
-    provider: 'buttondown',
-  },
+  // newsletter: {
+  //   // supports mailchimp, buttondown, convertkit, klaviyo, revue, emailoctopus, beehive
+  //   // Please add your .env file and modify it according to your selection
+  //   provider: 'buttondown',
+  // },
   comments: {
     // If you want to use an analytics provider you have to add it to the
     // content security policy in the `next.config.js` file.
