@@ -12,9 +12,10 @@ const compat = new FlatCompat({
   baseDirectory: __dirname,
 })
 
+/** @type {import('eslint').Linter.Config[]} */
 export default [
   {
-    ignores: [],
+    ignores: ['eslint.config.mjs', 'next.config.mjs'],
   },
   js.configs.recommended,
   ...compat.extends(
