@@ -6,12 +6,7 @@ draft: false
 summary: Nix-Darwin 적용기
 ---
 
-<img
-  src="/static/images/nix-darwin.png"
-  alt="NixOs"
-  width="300"
-  height="auto"
-/>
+<img src="/static/images/nix-darwin.png" alt="NixOs" width="300" height="auto" />
 
 # Nix-Darwin
 
@@ -21,10 +16,12 @@ summary: Nix-Darwin 적용기
 
 그럼 [Nix](https://nixos.org)는 뭔가 싶은데,
 
-Nix는 선언적이고 재현 가능한 패키지 관리자이자 시스템 구성 도구이며 순수 함수형 언어이다.
+Nix는 선언적인 패키지 관리자이자 시스템 구성 도구이며 순수 함수형 언어이다.
 
 ## 사용하는 이유
+
 개발 짬밥이 생기면서 새로운 맥북으로 갈아타게 되면 해야하는 초기 셋팅이 존재한다.
+
 - 부트음 끄기
 - 캡스락 컨트롤로 변경하기
 - 키 입력 속도 빠르게 변경하기
@@ -46,10 +43,12 @@ aws의 테라폼과 같다고 생각하면 된다.
 [Nix-darwin](https://github.com/nix-darwin/nix-darwin)의 리드미에 친절히 안내되어있다.
 
 1. nix설치 (determinate버전에 flakes가 권장된다.)
-> determinate는 nix설치를 간소화한 버전이고  
-> flakes는 nix를 설정하는 방식이라고 보면 되는데, 기존 channel 방식에서 flakes로 바뀌는 추세이다.
+
+   > determinate는 nix설치를 간소화한 버전이고  
+   > flakes는 nix를 설정하는 방식이라고 보면 되는데, 기존 channel 방식에서 flakes로 바뀌는 추세이다.
 
 2. config 설정 ([docs](https://nix-darwin.github.io/nix-darwin/manual/index.html))
+
 ```nix
 # 제꺼 가져왔어요
 # ~/.config/nix/flake.nix
@@ -245,4 +244,3 @@ aws의 테라폼과 같다고 생각하면 된다.
   height="auto"
   className="inline"
 />
-
