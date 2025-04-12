@@ -1,0 +1,105 @@
+---
+title: 웹개발시 사용되는 툴들은 뭐가 있나
+date: '2025-04-13'
+tags: ['frontend', 'web']
+draft: true
+summary: 트랜스파일러, 번들러, 린트, 포멧터, 언어서버, ...
+---
+
+요즘은 개발을 할려면 뭐가 이렇게 툴들이 덕지덕지 인지 참말로 피곤하다.
+
+js는 해당 툴들이 다 파편화 되어있는 반면
+
+> eslint, webpack, babel, prettier, ts-ls(microsoft)
+
+그래도 요즘 언어는 린트, 포멧터, 언어서버들을 공식적으로 달고 나오고 있다.
+
+> - rust인 경우 rust fmt, rust-analyzer, clippy
+
+여기서는 js에 관해 무슨 툴들이 사용되는지 알아보자.  
+그냥 생각나는대로 적어본다.
+
+## 1. js 런타임 (node, deno, bun)
+
+<div className="flex justify-center">
+  <Image
+    src="/static/images/nodejs.png"
+    alt="Node.js Logo"
+    width={200}
+    height={300}
+    className="my-4"
+  />
+</div>
+
+js의 근본은 html파일에 `<script>` 태그에 기생되어서 웹에서만 실행이 됬었는데,
+js 런타임이 생기면서 js가 웹을 넘어 서버에서도 실행이 가능해졌다.
+
+그러면서 js 파일 모듈화 해서 사용하고,  
+라이브러리들을 패키지 매니저를 이용해 사용하게 되고,  
+번들러, 트랜스파일러 등이 등장하여 사용하게 되고...
+
+덕지덕지의 시대가 열렸다.
+
+## 2. 패키지매니저(npm or yarn or pnpm)
+
+<div className="flex justify-center">
+  <Image
+    src="/static/images/package-manager.webp"
+    alt="pnpm-yarn"
+    width={300}
+    height={200}
+    className="my-4"
+  />
+</div>
+
+[npm](https://www.npmjs.com/), [pnpm](https://pnpm.io/), [yarn](https://yarnpkg.com/)
+
+node를 사용할때 보통 package.json을 활용한 패키지 매니저를 같이 사용하게된다.  
+근본은 npm인데, npm의 `node_modules` 시스템은 창시자인 라이언달도 인정한 망작이다.
+
+그래서 그런지 node_modules 시스템을 개선한 yarn 과 pnpm이 등장하였다.  
+다만 해당 패키지 매니저들은 근본이 아니기에 호환성에 있어서 이슈가 종종 발생한다.  
+특히나 모노레포에서... ㅠ
+
+## 3. language server (ts-ls)
+
+[typescrpit-language-server](https://github.com/typescript-language-server/typescript-language-server)  
+이것 덕분에 editor에서 ts, js를 사용할때 자동완성, 타입체크, 문법체크 등을 할수가 있게 되었다.  
+에디터와 언어서버는 `json-rpc`를 통해 통신을 하게되고 응답값을 에디터 화면에 보여주고, 자동완성 목록도 보여주게 된다.
+
+## 4. 린트, 포맷터 (eslint, prettier)
+
+[eslint](https://eslint.org/)
+
+[oxcLint](https://oxc.rs/)
+
+[prettier](https://prettier.io/)
+
+## 5. 트랜스파일러 (babel, swc)
+
+[babel](https://babeljs.io/)
+
+[swc](https://swc.rs/)
+
+## 6. 번들러 (webpack, vite, esbuild)
+
+[webpack](https://webpack.js.org/)
+
+[vite](https://vitejs.dev/)
+
+[esbuild](https://esbuild.github.io/)
+
+## 7. 테스팅 도구 (jest, vitest, playwright)
+
+[jest](https://jestjs.io/)
+
+[vitest](https://vitest.dev/)
+
+[playwright](https://playwright.dev/)
+
+<br />
+
+# 마무리
+
+포스팅하는게 이렇게 힘들줄이야...  
+담에 이어서 작성예정...
