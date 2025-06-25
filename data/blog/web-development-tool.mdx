@@ -2,7 +2,7 @@
 title: 웹개발시 사용되는 툴들은 뭐가 있나
 date: '2025-04-12'
 tags: ['frontend', 'web']
-draft: false
+draft: true
 summary: node, pnpm, yarn, eslint, prettier, babel, webpack, jest, vitest, ...
 ---
 
@@ -65,7 +65,7 @@ node를 사용할때 보통 package.json을 활용한 패키지 매니저를 같
 
 ## 3. language server (ts-ls)
 
-- [typescrpit-language-server](https://github.com/typescript-language-server/typescript-language-server)  
+- [typescrpit-language-server](https://github.com/typescript-language-server/typescript-language-server)
 
 이것 덕분에 editor에서 ts, js를 편집할때 자동완성, 타입체크, 문법체크 등을 할수가 있게 되었다.  
 에디터와 언어서버는 `json-rpc`프로토콜로 통해 통신을 하게되고 응답값을 에디터 화면에 보여주고, 자동완성 목록도 보여주게 된다.
@@ -212,5 +212,6 @@ playwright이다. 비슷한 역할에 다른툴도 많았었는데 요즘은 pla
 <br />
 
 # 마무리
+
 그래도 요즘은 nextjs쓰면 바벨, 웹팩등의 셋업은 많이 안해도 되고,  
 툴들이 zero-config를 추구하면서 업데이트 되고있어서 많이 간편해진거 같다.
