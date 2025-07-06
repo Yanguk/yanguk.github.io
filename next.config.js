@@ -22,6 +22,11 @@ const securityHeaders = [
     key: 'Content-Security-Policy',
     value: ContentSecurityPolicy.replace(/\n/g, ''),
   },
+  // code sandbox.io is used for embedding code examples
+  {
+    key: 'Content-Security-Policy',
+    value: "frame-src 'self' giscus.app https://codesandbox.io https://*.codesandbox.io",
+  },
   // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy
   {
     key: 'Referrer-Policy',

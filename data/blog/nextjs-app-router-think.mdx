@@ -1,0 +1,110 @@
+---
+title: Next.js App Router 실전 적용기-1
+date: '2025-07-06'
+tags: ['nextjs', 'frontend']
+draft: false
+summary: children 이해하기
+---
+
+nextjs의 app router를 실무에 적용하게 되면서  
+기존 클라이언트 렌더링 방식에서 어떻게 다르게 코드를 작성해야하는지 깨달은점들에 대해 작성할려고 한다.  
+한번에 다 작성하기엔 피곤하니 나누어서 작성할려고 한다.
+
+<br />
+
+# 1. Children 활용하기
+일단 먼저 알아야할게 Children 활용방법인데,  
+예시를 먼저 살펴보자.
+
+<iframe
+  src="https://codesandbox.io/p/devbox/boring-sammet-4wcvhc?embed=1&file=%2Fapp%2Fpage.tsx"
+  style={{ width: '100%', height: 500, border: 0, borderRadius: 4, overflow: 'hidden' }}
+  title="yanguk.dev"
+  allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+  sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+/>
+
+위 예시에서
+`Debugger`를 렌더링하는 두가지 컴포넌트가 있다.  
+
+---
+
+하나는 Children를 사용하지 않은 컴포넌트.
+```tsx
+function NoChildren() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div className="space-y-3">
+      <p className="font-semibold text-blue-700">count: {count}</p>
+
+      <button
+        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+        onClick={() => setCount(count + 1)}
+      >
+        Up!
+      </button>
+
+      <Debugger message="NoChildren Debugger" />
+    </div>
+  );
+}
+```
+
+여기에서 up 버튼을 누르면 `Debugger` 컴포넌트는 어떻게 될까?  
+
+`Debugger` 컴포넌트도 **리렌더링**이 된다.  
+그이유는 부모가 리렌더링 되면 자식컴포넌트로 리렌더링이 되는 react 법칙 때문이다.  
+
+---
+
+다른 하나는 Children을 사용한 컴포넌트
+```tsx
+function WithChildren({ children }: PropsWithChildren) {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div className="space-y-3">
+      <p className="font-semibold text-blue-700">count: {count}</p>
+
+      <button
+        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+        onClick={() => setCount(count + 1)}
+      >
+        Up!
+      </button>
+
+      {children}
+    </div>
+  );
+}
+
+// app.js
+<WithChildren>
+  <Debugger message="WithChildren Debugger" />
+</WithChildren>
+```
+
+여기에서는 up 버튼을 누르면 어떻게 될까?  
+
+children으로 들어가는 `Debugger` 컴포넌트는 **리렌더링이 되지않는다.**  
+그 이유는 children이 자식 컴포넌트처럼 보이지만 사실은 같은 계층의 컴포넌트이고,  
+자식컴포넌트가 아니기에 리렌더링이 되지 않는다.  
+
+<br />
+<img src="/static/images/250706/children-1.png" alt="리액트 트리" width="500" />
+그림으로 이해하면
+왼쪽이 children 사용한 트리이고, 오른쪽이 children 사용하지 않는 리액트 트리이다.
+
+그럼 이제 어떻게 해야할지 감이 왔을 것이다.
+
+---
+
+## 결론
+<img src="/static/images/250706/tree.png" alt="리액트 트리" width="500" />
+
+리액트 트리에서 클라이언트 컴포넌트 밑에 서버컴포넌트는 올수가 없으니  
+컴포넌트 분리를 잘하고 children을 이용해서 클라이언트 컴포넌트는 트리의 마지막으로 보내버리자.
+
+이렇게 되면 상태관리는 어떻게 할지가 고민인데 그건 다음 포스팅에 작성하겠다!
+
