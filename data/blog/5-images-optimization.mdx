@@ -1,0 +1,161 @@
+---
+title: 웹에서 이미지 최적화 하기
+date: '2025-07-21'
+tags: ['nextjs', 'frontend']
+draft: true
+summary: 느려지는 웹사이트를 이미지 최적화로 극복하자
+---
+
+웹 개발을 하다보면 이미지를 다루게 될 일이 많다.  
+여기에서 유저가 이미지를 업로드 하는 기능이 있다면 주의해야될 점이 있다.  
+보통 핸드폰으로 찍은 사진을 업로드를 할텐데, 이 경우 용량은 `2~3MB` 정도 된다.  
+이러한 이미지들을 그대로 사용한다면 이제 웹페이지는 느려지는 것이다.  
+
+웹에서 적합한 이미지 크기는 네트워크 환경에 따라 다르고, 이미지의 역할에 따라 다르긴 할텐데 ChatGPT한테 물어본 결과 `300kb`이하가 적당하다고 한다.  
+그렇다면 이미지를 어떻게 줄일수 있을까?
+
+## 방법1: 업로드 용량 제한하기
+
+```html
+<script>
+  const fileInput = document.getElementById("fileInput");
+
+  fileInput.addEventListener("change", function () {
+    const file = fileInput.files[0];
+
+    if (!file) return;
+
+    const maxSizeMB = 1; // 1MB 제한
+    const maxSizeBytes = maxSizeMB * 1024 * 1024;
+
+    if (file.size > maxSizeBytes) {
+      toast('용량이 너무 커요')
+    } else {
+      toast('성공!')
+    }
+  });
+</script>
+```
+
+파일 인풋에서 받아온 파일에 대한 용량을 알 수가 있다.
+여기서 최대 용량 이하만 받도록 하는 것이다.
+
+## 방법2: 클라이언트에서 리사이징하기
+
+사이즈만 줄여도 용량이 많이 줄어든다.  
+웹에서는 `canvas` api를 사용해서 사이즈를 줄일수가 있다.  
+
+원하는 사이즈의 canvas를 만들고 그안에 이미지를 그려서 바이너리로 추출하는 방식이다.  
+
+```html
+<script>
+  const upload = document.getElementById("upload");
+
+  upload.addEventListener("change", async function () {
+    const file = this.files[0];
+
+    const img = new Image();
+    img.src = URL.createObjectURL(file);
+
+    img.onload = () => {
+      const MAX_WIDTH = 800;
+      const scale = MAX_WIDTH / img.width;
+      const width = Math.min(img.width, MAX_WIDTH);
+      const height = img.height * scale;
+
+      // 캔버스 태그 생성
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+
+      // 이미지 그리기
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0, width, height);
+
+      // 압축된 blob로 변환
+      canvas.toBlob((blob) => {
+        if (blob) {
+          // 미리보기 url
+          const resizedUrl = URL.createObjectURL(blob);
+
+          // 서버에 업로드하려면 `blob`을 formData 등에 넣어서 전송
+          // const formData = new FormData();
+          // formData.append("file", blob, "resized.jpg");
+        }
+      }, "image/jpeg", 0.8); // JPEG 포맷, 품질 80%
+    };
+  });
+</script>
+```
+
+## 방법3: 백엔드에서 처리하기
+
+nodejs에서는 `sharp`가 대표적인 이미지 압축 및 변환 라이브러리다.
+
+과거 실무 중에 적용 시킨 사례를 소개한다.
+
+### 적용전
+```tsx
+export const parseImagesMiddleware = [
+	bindMiddleware(multer().array('images', STUDY_PLAN_IMAGES_UPLOAD_MAX_COUNT)),
+	(req, res, next) => {
+		const files = req.files ?? []
+
+		req.files = files.map(file => ({
+			fileName: parseFileName(file, req.params.planId),
+			buffer: file.buffer,
+		}))
+
+		next()
+	}),
+]
+```
+
+### 적용후
+```tsx
+export const parseImagesMiddleware = [
+	bindMiddleware(multer().array('images', STUDY_PLAN_IMAGES_UPLOAD_MAX_COUNT)),
+	asyncHandler(async (req: any, _res, next) => {
+		const files = req.files ?? []
+
+		const webpFiles = await Promise.all(
+			files.map(async (file) => ({
+				fileName: parseFileName(file, req.params.planId, 'webp'),
+				buffer: await sharp(file.buffer).webp().toBuffer(),
+			})),
+		)
+
+		req.files = webpFiles
+
+		next()
+	}),
+]
+```
+sharp로 손실 압축을 하여 webp포멧으로 만들어 저장한다.  
+이렇게 했을시 어느정도 압축이 되는지 살펴보면,  
+아래는 핸드폰 에서 캡쳐사진이고 용량은 `978.5kb` 이다.
+
+<Image
+  src="/static/images/250721/example.png"
+  alt="오늘의집"
+  width={200}
+  height={300}
+  className="my-4"
+/>
+
+이 사진을 위같이 webp로 손실압축을 하면 `100.4kb`가 된다.  
+`87.9%`가 압축된 거다.  
+
+효과는 확실한데 여기서 주의할 점이 있다.  
+`sharp`는 cpu 자원을 많이 사용하기에 위같이 서버에서 다이렉트로 사용하긴 무리가 있다.  
+그래서 최종적으로 적용한 방법은 서버에서는 원본을 저장하고,  
+람다에서 sharp를 쓰는 방법으로 이미지를 최적화 하였다.
+
+![image-flow](/static/images/250721/image-flow.png)
+
+
+## 결론
+
+결국엔 위 세가지 방법 모두 사용해야 되지 않나 싶은데,  
+실용적인 관점에서는 우선 1번 부터 적용하고 필요성에 따라 2번 3번 순으로 적용하면 될 것 같다.
+
