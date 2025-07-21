@@ -1,5 +1,6 @@
 {
-  "features": 1,
   "nextjs": 2,
-  "frontend": 2
+  "frontend": 3,
+  "web": 1,
+  "tool": 1
 }
