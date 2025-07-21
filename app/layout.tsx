@@ -146,6 +146,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fff" />
       <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000" />
       <meta name="google-site-verification" content="_dXogOT6KbenCn54aGEMMuXeW7mLZQs4g6rNUCfFZGM" />
+      <meta name="naver-site-verification" content="85eb0719d0fb34eb97b2207649b5344cb4bffc7c" />
 
       <link rel="alternate" type="application/rss+xml" href={`${basePath}/feed.xml`} />
 
