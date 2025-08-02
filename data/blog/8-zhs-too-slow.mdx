@@ -1,0 +1,54 @@
+---
+title: 느려진 zsh 터미널 빠르게 하기
+date: '2025-08-02'
+tags: ['tool', 'zsh', 'terminal']
+draft: false
+summary: zsh 퍼포먼스 개선
+---
+
+## 개요
+
+개발할 때는 주로 neovim을 사용하다 보니, 터미널에서 모든 작업을 처리한다.  
+하루에도 여러 번 쉘과 neovim을 껐다 켜기 때문에, 시작 속도가 느려지면 정말 신경이 쓰인다.  
+이런 이유로 neovim에서는 lazy.nvim 플러그인 매니저로 최적화를 했었는데,  
+
+이제는 쉘이 켜지는 속도가 너무 거슬리게 되어서 최적화를 시도 하였다.
+
+## 원인 찾기
+
+[zsh-bench](https://github.com/romkatv/zsh-bench)을 돌려보았다.
+
+
+![zsh-bench-result](/static/images/250802/zsh-bench.png)
+
+눈 여겨볼건 이거다.
+- first_prompt_lag_ms=1409.696
+
+처음 키고 프롬프트 입력할수 있을때 까지 1409ms가 걸린다.
+그럼 뭐때문에 이렇게 느린가?
+
+`zsh/zprof`를 사용해서 알 수 있다.
+
+![zprof](/static/images/250802/zprof.png)
+
+이 모든건 nvm 때문인 것 같다.
+
+## 개선 하기
+
+최적화 하는김에 이번에 플러그인 매니저도 바꾸고 다른 최적화도 뭘 할 수 있는지 살펴보고  
+다음과 같은 작업을 하였다.
+
+- nvm 대안책 찾기 => [Volta](https://volta.sh/)
+- oh-my-zsh => [antidote](https://github.com/mattmc3/antidote)
+
+
+## 결과
+
+![zsh-bench-result](/static/images/250802/result.png)
+
+first_prompt_lag_ms가 `98ms`로 줄었다. 거의 바로 켜진다고 보면된다.
+
+다른사람들 자료보면 50ms 밑까지도 줄이기도하고,  
+50ms 밑은 0ms과 체감상 차이가 없다고 하여서 더 줄이고 싶은데 일단 오늘는 여기까지...  
+
+> 설정은 제 [dotfiles](https://github.com/Yanguk/dotfiles)에서 볼 수 있습니다.
