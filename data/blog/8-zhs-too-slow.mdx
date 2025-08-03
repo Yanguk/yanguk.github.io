@@ -52,3 +52,31 @@ first_prompt_lag_ms가 `98ms`로 줄었다. 거의 바로 켜진다고 보면된
 50ms 밑은 0ms과 체감상 차이가 없다고 하여서 더 줄이고 싶은데 일단 오늘는 여기까지...  
 
 > 설정은 제 [dotfiles](https://github.com/Yanguk/dotfiles)에서 볼 수 있습니다.
+
+<br />
+
+### 추가내용 (250803)
+
+nix의 기본 설정때문에 속도가 느린거였다.
+```nix
+programs.zsh = {
+  enable = true;
+  enableBashCompletion = false;
+  enableCompletion = false;
+  variables = {
+    ZDOTDIR = "$HOME/.config/zsh";
+  };
+  promptInit = ''
+    fpath=(${pkgs.antidote}/share/antidote/functions $fpath)
+    autoload -Uz antidote
+  '';
+};
+```
+
+기본 설정들을 비활성화하고  
+promptInit도 기본값을 날릴겸 antidote를 lazy하게 가져오도록 섩정하였다.
+
+![zsh-bench-result-2](/static/images/250802/result2.png)
+
+최종적으론 1409.696가 39.118이 되었고 `97.22%` 빨라졌다. 이젠 바로 켜진다.
+
