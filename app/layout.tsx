@@ -65,7 +65,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang={siteMetadata.language}
-      className={`${pretendard.className} scroll-smooth`}
+      className={`${pretendard.variable} scroll-smooth`}
       suppressHydrationWarning
     >
       <link
