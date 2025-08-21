@@ -1,0 +1,128 @@
+---
+
+title: 내가 프론트엔드 코드 짤때 추구하는 것
+date: '2025-08-21'
+tags: ['react', 'toss', 'fronted']
+draft: false
+summary: 보다 나은 코드를 위해서...
+---
+
+2025 토스 next-challenge에 지원하게 돼서 코딩 테스트 -> 과제 전형까지 통과를 하였다.  
+이제 면접을 준비해야 되는데, 면접 준비할 겸 평소 생각하는 코딩 스타일에 대해 작성해 본다.  
+
+> 작년엔 면접에서 떨어졌다. ㅠㅠ 이번이 마지막 기회...
+
+
+## 1. 리액트에서 useEffect의 잘못된 패턴 피하기
+
+### 생길 수 있는 안티패턴
+```tsx
+const [submittedAnswer, setSubmittedAnswer] = useState<string | null>(null);
+
+const handleSubmit = (answer) => { setSubmittedAnswer(submittedAnswer) };
+
+useEffect(() => {
+  if (submittedAnswer) {
+    mutate({ submittedAnswer });
+
+    setSomething();
+  }
+}, [submittedAnswer])
+```
+
+`useEffect`를 반응형 처럼 사용하는 패턴.  
+`useEffect`는 코드 가독성을 안 좋게 만들고, 불필요한 렌더링이 발생할 수 있다.
+
+### 추구하는바
+```tsx
+const [submittedAnswer, setSubmittedAnswer] = useState<string | null>(null);
+
+const handleSubmit = (answer) => {
+  setSubmittedAnswer(submittedAnswer);
+  mutate({ submittedAnswer });
+
+  setSomething();
+};
+```
+
+핸들러 함수에서 코드 수행하기  
+코드가 단방향으로 흐르기에 가독성도 좋음
+
+## 2. 함수형 코드로 간략하게 작성하기
+
+함수형이라고 해서 어려운건 없다.  
+자바스크립트도 많이 발전해서 언어에서 지원하는 메소드도 많아졌기 때문이다.
+
+### 생길 수 있는 안티패턴
+```ts
+const items = [...]
+
+const somethingMap = new Map()
+
+items.forEach((item) => somethingMap.set(item.id, item))
+```
+
+위 같이하면 타입도 지정해야되서 type-first로 작성해야한다.  
+그리고 함수형으로 작성하면 리턴값으로 소통하기에 이전에 선언한 변수는 신경안쓰고 코드를 앞으로만 읽어가면 되는데  
+위 같은 코드는 forEach로 다른 변수의 상태를 변경하기에, 코드를 읽기가 편하지는 않다.
+
+```ts
+const result = [];
+
+for (let i = 0; i < items.length; i++) {
+  const item = items[i];
+  result.push(somethingTransfer(item));
+}
+```
+for문은 가독성을 해친다.
+
+### 추구하는 바
+```ts
+const items = [...]
+
+const somethingMap = new Map(items.map((item) => [item.id, item]))
+```
+
+휠씬 깔끔해졌다.
+
+```ts
+const result = items
+  .flatMap(somethingTransfer)
+  .filter(...)
+  .reduce(...)
+```
+
+코드 흐름이 한눈에 보이고 훨씬 깔끔해졌다.
+
+
+## 3. 배열값을 모나드로써 유용하게 사용하기
+
+### 생길 수 있는 안티패턴
+```ts
+let somethings = null
+
+if (isOk) {
+  somethings = [...items];
+}
+
+const result = something && something.length > 0
+  ? something.map(...)
+  : null
+```
+
+null 처리를 하느라 코드가 지저분해진다.
+
+
+### 추구하는 바
+```ts
+const somethings = []
+
+if (isOk) {
+  somethings = [...items];
+}
+
+const result = something.map(...)
+```
+
+빈배열에 map, filter, 등등의 메소드를 사용하면 아무런일도 일어나지 않으면서 코드는 잘 흘러간다.  
+이를 모나드 처럼 사용하여 null 및 실패케이스를 고려하기보단 배열의 하나의 타입으로 다루면 훨씬 코드도 간결해지고, 안전한 코드가 된다.
