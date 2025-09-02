@@ -3,7 +3,7 @@ const siteMetadata = {
   title: 'Yanguk Blog',
   author: 'yanguk',
   headerTitle: 'Yanguk',
-  description: 'Web Developer Blog',
+  description: 'Software Engineer Blog',
   language: 'ko-KR',
   theme: 'system', // system, dark or light
   siteUrl: 'https://yanguk.github.io',

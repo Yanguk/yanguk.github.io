@@ -1,14 +1,12 @@
 {
   "react": 1,
-  "toss": 1,
-  "fronted": 1,
+  "frontend": 6,
   "api": 1,
   "restful": 1,
-  "backend": 3,
+  "backend": 2,
   "tool": 3,
   "zsh": 1,
   "terminal": 1,
-  "frontend": 5,
   "nextjs": 2,
   "web": 1
 }
