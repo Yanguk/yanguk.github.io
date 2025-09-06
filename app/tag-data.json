@@ -1,12 +1,12 @@
 {
-  "tool": 3,
   "react": 1,
   "frontend": 6,
-  "web": 1,
-  "nextjs": 2,
+  "api": 1,
+  "restful": 1,
   "backend": 2,
+  "tool": 3,
   "zsh": 1,
   "terminal": 1,
-  "api": 1,
-  "restful": 1
+  "nextjs": 2,
+  "web": 1
 }
