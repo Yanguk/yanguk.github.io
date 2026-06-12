@@ -1,6 +1,7 @@
 ---
 title: 리액트 동작 방식과 최적화
 publishedAt: 2025-11-11
+draft: true
 ---
 
 [React Re Rendering](https://yanguk.github.io/teck-talk-react-re-render)

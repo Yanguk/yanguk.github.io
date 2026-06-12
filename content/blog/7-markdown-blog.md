@@ -1,6 +1,7 @@
 ---
 title: markdown 블로그 개발하기!
 publishedAt: 2026-01-21
+draft: true
 ---
 
 지금 블로그는 nextjs의 mdx지원 기능을 이용해서 구현되었고, vercel로 호스팅중 이다.

@@ -1,6 +1,7 @@
 ---
 title: hono rpc, typesafe하게 사용하기-2
 publishedAt: 2026-01-25
+draft: true
 ---
 
 이전글에서 좀더 나은 방향을 찾아서 코드만 작성해둔다.

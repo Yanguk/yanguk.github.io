@@ -1,6 +1,7 @@
 ---
 title: Next.js App Router 캐싱 메커니즘
 publishedAt: 2025-04-12
+draft: true
 ---
 
 nextjs app router 방식에서는 최적화를 위한 내부에서 다양한 캐싱이 진행된다.  
