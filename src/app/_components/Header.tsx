@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import CustomLink from "@/app/_components/Link";
+import { ThemeToggle } from "@/app/_components/ThemeToggle";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 import { siteMetadata } from "@/site-meta-data";
@@ -31,20 +32,23 @@ export default function Header() {
         }
       ></Avatar>
 
-      <div className="flex gap-5 md:w-12 md:flex-col">
-        {menus.map((item) => (
-          <CustomLink
-            key={item.href}
-            href={item.href}
-            className={cn(
-              "font-medium text-gray-900 hover:text-primary-500 hover:opacity-80 dark:text-foreground dark:hover:text-primary-400",
-              curNav === item.href.slice(1) &&
-                "dark:font-bold dark:text-highlight",
-            )}
-          >
-            {item.label}
-          </CustomLink>
-        ))}
+      <div className="flex items-center justify-between gap-5 md:w-12 md:flex-col md:items-start">
+        <div className="flex gap-5 md:flex-col">
+          {menus.map((item) => (
+            <CustomLink
+              key={item.href}
+              href={item.href}
+              className={cn(
+                "font-medium text-foreground hover:text-highlight hover:opacity-80",
+                curNav === item.href.slice(1) && "font-bold text-highlight",
+              )}
+            >
+              {item.label}
+            </CustomLink>
+          ))}
+        </div>
+
+        <ThemeToggle />
       </div>
     </div>
   );

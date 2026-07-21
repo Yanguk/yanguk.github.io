@@ -48,20 +48,20 @@ pre {
 
 code[class*="language-"],
 pre[class*="language-"] {
-  color: #cdd6f4;
+  color: var(--code-foreground);
 }
 
 :not(pre) > code[class*="language-"],
 pre[class*="language-"] {
-  background: #181825;
+  background: var(--code-background);
 }
 
 code[class*="language-"],
 pre[class*="language-"] {
-  color: #cdd6f4;
+  color: var(--code-foreground);
 }
 
 :not(pre) > code[class*="language-"],
 pre[class*="language-"] {
-  background: #181825;
+  background: var(--code-background);
 }

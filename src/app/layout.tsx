@@ -7,6 +7,7 @@ import Footer from "@/app/_components/Footer";
 import Header from "@/app/_components/Header";
 import { MdxLayout } from "@/app/_components/MdxLayout";
 import { MermaidInit } from "@/app/_components/MermaidInit";
+import { ThemeProvider } from "@/components/theme-provider";
 import { allFontVariable } from "@/font";
 import { siteMetadata } from "@/site-meta-data";
 
@@ -23,22 +24,32 @@ export default function RootLayout({
   return (
     <html
       lang="ko"
-      className={`dark ${allFontVariable} scroll-smooth antialiased`}
+      suppressHydrationWarning
+      className={`${allFontVariable} scroll-smooth antialiased`}
     >
-      <meta name="apple-mobile-web-app-title" content="yanguk" />
+      <head>
+        <meta name="apple-mobile-web-app-title" content="yanguk" />
+      </head>
 
       <body className="flex min-h-dvh w-full max-w-5xl flex-col md:mx-auto md:p-18">
-        <div className="mx-3 my-8 flex grow flex-col gap-10">
-          <div className="flex grow flex-col gap-12 md:flex-row">
-            <Header />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <div className="mx-3 my-8 flex grow flex-col gap-10">
+            <div className="flex grow flex-col gap-12 md:flex-row">
+              <Header />
 
-            <MdxLayout>{children}</MdxLayout>
+              <MdxLayout>{children}</MdxLayout>
+            </div>
+
+            <Footer />
           </div>
 
-          <Footer />
-        </div>
-
-        <MermaidInit />
+          <MermaidInit />
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -5,12 +5,93 @@
 
 @plugin "@tailwindcss/typography";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* =========================================================
  * Kanagawa Core Tokens (:root)
  * ======================================================= */
 
 /** var 선언부 */
 :root {
+  color-scheme: light;
+
+  /* background */
+  --background: oklch(93% 0.02 95); /* lotusWhite */
+  --foreground: oklch(28% 0.03 265); /* sumiInk */
+
+  /* surfaces */
+  --card: oklch(96% 0.015 95);
+  --card-foreground: var(--foreground);
+  --popover: oklch(96% 0.015 95);
+  --popover-foreground: var(--foreground);
+
+  /* text roles */
+  --primary: var(--foreground);
+  --primary-foreground: var(--background);
+  --secondary: oklch(88% 0.02 95);
+  --secondary-foreground: var(--foreground);
+  --muted: oklch(88% 0.02 95);
+  --muted-foreground: oklch(48% 0.03 265);
+
+  /* accents */
+  --accent: oklch(84% 0.04 230);
+  --accent-foreground: var(--foreground);
+
+  /* feedback */
+  --destructive: oklch(55% 0.18 25);
+  --destructive-foreground: var(--foreground);
+
+  /* borders / focus */
+  --border: oklch(78% 0.025 95);
+  --input: var(--border);
+  --ring: oklch(48% 0.09 230);
+
+  /* sidebar */
+  --sidebar: oklch(90% 0.02 95);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--foreground);
+  --sidebar-primary-foreground: var(--background);
+  --sidebar-accent: oklch(86% 0.025 95);
+  --sidebar-accent-foreground: var(--foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
+
+  --highlight: oklch(45% 0.08 210);
+  --point: oklch(50% 0.11 45);
+  --heading-1: oklch(45% 0.08 230);
+  --heading-2: oklch(45% 0.08 280);
+  --heading-3: oklch(48% 0.11 45);
+  --blockquote-text: oklch(45% 0.08 280);
+  --blockquote-border: var(--border);
+  --code-background: oklch(88% 0.025 95);
+  --code-foreground: oklch(28% 0.03 265);
+
+  /* layout */
+  --radius: 0rem;
+  --spacing: 0.25rem;
+  --letter-spacing: 0em;
+  --tracking-normal: 0em;
+
+  /* shadows (disabled – Kanagawa flat) */
+  --shadow-color: hsl(0 0% 0%);
+  --shadow-opacity: 0;
+  --shadow-offset-x: 0px;
+  --shadow-offset-y: 1px;
+  --shadow-blur: 0px;
+  --shadow-spread: 0px;
+  --shadow-2xs: 0 0 0 hsl(0 0% 0% / 0);
+  --shadow-xs: var(--shadow-2xs);
+  --shadow-sm: var(--shadow-2xs);
+  --shadow: var(--shadow-2xs);
+  --shadow-md: var(--shadow-2xs);
+  --shadow-lg: var(--shadow-2xs);
+  --shadow-xl: var(--shadow-2xs);
+  --shadow-2xl: var(--shadow-2xs);
+}
+
+.dark {
+  color-scheme: dark;
+
   /* background */
   --background: oklch(24% 0.02 275); /* sumiInk1 */
   --foreground: oklch(90% 0.03 95); /* fujiWhite */
@@ -52,27 +133,15 @@
   --sidebar-border: var(--border);
   --sidebar-ring: var(--ring);
 
-  /* layout */
-  --radius: 0rem;
-  --spacing: 0.25rem;
-  --letter-spacing: 0em;
-  --tracking-normal: 0em;
-
-  /* shadows (disabled – Kanagawa flat) */
-  --shadow-color: hsl(0 0% 0%);
-  --shadow-opacity: 0;
-  --shadow-offset-x: 0px;
-  --shadow-offset-y: 1px;
-  --shadow-blur: 0px;
-  --shadow-spread: 0px;
-  --shadow-2xs: 0 0 0 hsl(0 0% 0% / 0);
-  --shadow-xs: var(--shadow-2xs);
-  --shadow-sm: var(--shadow-2xs);
-  --shadow: var(--shadow-2xs);
-  --shadow-md: var(--shadow-2xs);
-  --shadow-lg: var(--shadow-2xs);
-  --shadow-xl: var(--shadow-2xs);
-  --shadow-2xl: var(--shadow-2xs);
+  --highlight: oklch(72% 0.05 190); /* waveAqua */
+  --point: oklch(72% 0.06 45); /* surimiOrange */
+  --heading-1: oklch(70% 0.05 230); /* h1 crystalBlue */
+  --heading-2: oklch(65% 0.06 260); /* h2 springViolet */
+  --heading-3: oklch(60% 0.08 45); /* h3 surimiOrange */
+  --blockquote-text: oklch(72% 0.07 270);
+  --blockquote-border: var(--border);
+  --code-background: #181825;
+  --code-foreground: #cdd6f4;
 }
 
 /* =========================================================
@@ -131,17 +200,17 @@
   --color-sidebar-ring: var(--sidebar-ring);
 
   /* custom */
-  --color-highlight: oklch(72% 0.05 190); /* waveAqua */
-  --color-point: oklch(72% 0.06 45); /* surimiOrange */
+  --color-highlight: var(--highlight);
+  --color-point: var(--point);
 
   /* pose */
-  --color-heading-1: oklch(70% 0.05 230); /* h1 – crystalBlue 느낌 */
-  --color-heading-2: oklch(65% 0.06 260); /* h2 – springViolet 느낌 */
-  --color-heading-3: oklch(60% 0.08 45); /* h3 – surimiOrange 느낌 */
+  --color-heading-1: var(--heading-1);
+  --color-heading-2: var(--heading-2);
+  --color-heading-3: var(--heading-3);
 
   /* blockquote colors */
-  --color-blockquote-text: oklch(72% 0.07 270); /* springViolet-ish */
-  --color-blockquote-border: oklch(42% 0.03 275); /* sumiInk4 */
+  --color-blockquote-text: var(--blockquote-text);
+  --color-blockquote-border: var(--blockquote-border);
 }
 
 /* =========================================================

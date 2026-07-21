@@ -1,8 +1,12 @@
 "use client";
 
 import Giscus from "@giscus/react";
+import { useTheme } from "next-themes";
 
 export const GiscusWrapper = ({ className }: { className?: string }) => {
+  const { resolvedTheme } = useTheme();
+  const theme = resolvedTheme === "light" ? "light" : "dark";
+
   return (
     <div className={className}>
       <Giscus
@@ -16,7 +20,7 @@ export const GiscusWrapper = ({ className }: { className?: string }) => {
         reactions-enabled="1"
         emitMetadata="0"
         inputPosition="bottom"
-        theme="dark"
+        theme={theme}
         lang="ko"
         loading="lazy"
       />
