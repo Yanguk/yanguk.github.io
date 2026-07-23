@@ -33,7 +33,7 @@ export default function Header() {
       ></Avatar>
 
       <div className="flex items-center justify-between gap-5 md:w-12 md:flex-col md:items-start">
-        <div className="flex gap-5 md:flex-col">
+        <div className="grid w-28 grid-cols-2 gap-5 md:w-12 md:grid-cols-1">
           {menus.map((item) => (
             <CustomLink
               key={item.href}

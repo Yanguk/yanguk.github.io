@@ -6,6 +6,14 @@ export const dynamicParams = false;
 export default async function Page() {
   const contents = await getAllBlogContents();
 
+  if (contents.length === 0) {
+    return (
+      <p className="not-prose text-muted-foreground">
+        아직 작성된 포스팅이 없습니다.
+      </p>
+    );
+  }
+
   return (
     <div className="not-prose flex flex-col gap-7">
       {contents.map(({ metadata, slug }) => (
