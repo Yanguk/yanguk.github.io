@@ -1,0 +1,127 @@
+/* Minimal neutral theme for CSS syntax highlighting */
+
+.token.keyword {
+  color: var(--code-foreground);
+}
+
+.token.builtin {
+  color: var(--code-foreground);
+}
+
+.token.class-name {
+  color: var(--code-foreground);
+}
+
+.token.function {
+  color: var(--code-foreground);
+}
+
+.token.boolean,
+.token.number {
+  color: var(--code-foreground);
+}
+
+.token.string,
+.token.char {
+  color: var(--code-foreground);
+}
+
+.token.symbol {
+  color: var(--code-foreground);
+}
+
+.token.regex {
+  color: var(--code-foreground);
+}
+
+.token.url {
+  color: var(--code-foreground);
+}
+
+.token.operator {
+  color: var(--code-foreground);
+}
+
+.token.variable {
+  color: var(--code-foreground);
+}
+
+.token.constant {
+  color: var(--code-foreground);
+}
+
+.token.property {
+  color: var(--code-foreground);
+}
+
+.token.punctuation {
+  color: var(--muted-foreground);
+}
+
+.token.important {
+  color: var(--code-foreground);
+}
+
+.token.comment {
+  color: var(--muted-foreground);
+  font-style: italic;
+}
+
+.token.tag {
+  color: var(--code-foreground);
+}
+
+.token.attr-name {
+  color: var(--code-foreground);
+}
+
+.token.attr-value {
+  color: var(--code-foreground);
+}
+
+.token.namespace {
+  color: var(--code-foreground);
+}
+
+.token.prolog,
+.token.doctype {
+  color: var(--code-foreground);
+}
+
+.token.cdata {
+  color: var(--code-foreground);
+}
+
+.token.entity {
+  color: var(--code-foreground);
+}
+
+.token.atrule {
+  color: var(--code-foreground);
+}
+
+.token.selector {
+  color: var(--code-foreground);
+}
+
+/* Diff */
+
+.token.deleted {
+  color: var(--code-foreground);
+}
+
+.token.inserted {
+  color: var(--code-foreground);
+}
+
+/* Other */
+
+.token.bold {
+  font-weight: bold;
+}
+.token.italic {
+  font-style: italic;
+}
+.token.underline {
+  text-decoration: underline;
+}

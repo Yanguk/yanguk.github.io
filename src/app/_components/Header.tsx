@@ -25,7 +25,7 @@ export default function Header() {
         className="mb-3 size-10 after:border-none"
         render={
           <CustomLink href="/" aria-label={siteMetadata.headerTitle}>
-            <AvatarFallback className="bg-[oklch(33.7%_0.0705_254.8)] font-backyard text-gray-100">
+            <AvatarFallback className="bg-foreground font-backyard text-background">
               YU
             </AvatarFallback>
           </CustomLink>
