@@ -1,7 +1,7 @@
 ---
 title: 요즘 근황 (feat. AI)
 publishedAt: 2026-03-11
-draft: true
+public: false
 ---
 
 AI 시대가 되면서 이제는 프로그래밍 언어나 숙련도에 크게 구애받지 않고도 다양한 서비스를 만들 수 있게 되었다.

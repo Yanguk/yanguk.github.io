@@ -63,7 +63,7 @@ export async function getAllBlogContents() {
     return dateCompare;
   });
 
-  return contents.filter(({ metadata }) => !metadata.draft);
+  return contents.filter(({ metadata }) => metadata.public);
 }
 
 export function formatDate(date: string, includeRelative = false) {

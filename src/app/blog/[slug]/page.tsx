@@ -18,7 +18,7 @@ export default async function Page({
 
   const { htmlContent, metadata } = await importBlogContent(slug);
 
-  if (metadata.draft) {
+  if (!metadata.public) {
     return notFound(); // Render 404 page
   }
 

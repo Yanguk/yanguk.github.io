@@ -1,7 +1,7 @@
 ---
 title: 느려진 zsh 터미널 성능 최적화
 publishedAt: 2025-10-03
-draft: true
+public: false
 ---
 
 개발할 때는 주로 neovim을 사용하다 보니, 터미널에서 모든 작업을 수행하는 데

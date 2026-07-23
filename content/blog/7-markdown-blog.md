@@ -1,7 +1,7 @@
 ---
-title: markdown 블로그 개발하기!
+title: markdown 블로그 개발하기
 publishedAt: 2026-01-21
-draft: true
+public: true
 ---
 
 지금 블로그는 nextjs의 mdx지원 기능을 이용해서 구현되었고, vercel로 호스팅중 이다.
@@ -29,7 +29,6 @@ draft: true
 [^3]: 검색 엔진용 사이트맵
 
 - RSS Feed 설정
-  - 내 블로그 피드 받고 싶어하는 팬들을 위해서...
 
 ### 구현 하기
 
@@ -109,7 +108,7 @@ export async function getAllBlogContents() {
     b.metadata.publishedAt.localeCompare(a.metadata.publishedAt),
   );
 
-  return contents.filter(({ metadata }) => !metadata.draft);
+  return contents.filter(({ metadata }) => !metadata.public);
 }
 ```
 
@@ -130,7 +129,7 @@ export default async function Page({
 
   const { default: Content, metadata } = await importBlogContent(slug);
 
-  if (metadata.draft) {
+  if (metadata.public) {
     return notFound(); // Render 404 page
   }
 
@@ -153,7 +152,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   const blogRoutes = posts
-    .filter(({ metadata }) => !metadata.draft)
+    .filter(({ metadata }) => !metadata.public)
     .map(({ metadata, slug }) => {
       const date = new Date(metadata.publishedAt);
       const hours = date.getHours();

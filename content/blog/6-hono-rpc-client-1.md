@@ -1,7 +1,7 @@
 ---
 title: hono rpc, typesafe하게 사용하기-1
 publishedAt: 2026-01-21
-draft: true
+public: false
 ---
 
 회사에서 새로운 프로젝트 개발시 서버 http 프레임워크를 [hono](https://hono.dev/)로 사용하게 되었다.

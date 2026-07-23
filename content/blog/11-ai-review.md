@@ -1,7 +1,7 @@
 ---
 title: AI coding agent... 이거 괜찮은거 맞아?
 publishedAt: 2026-03-20
-draft: true
+public: false
 ---
 
 이전에는 AI 코드가 너무 맘에 안 들어서 보조하는 역할로만 써왔는데,

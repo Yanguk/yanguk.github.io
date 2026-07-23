@@ -13,7 +13,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   const blogRoutes = posts
-    .filter(({ metadata }) => !metadata.draft)
+    .filter(({ metadata }) => !metadata.public)
     .map(({ metadata, slug }) => {
       const date = new Date(metadata.publishedAt);
       const hours = date.getHours();

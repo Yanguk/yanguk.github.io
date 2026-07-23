@@ -1,7 +1,7 @@
 ---
 title: 코파일럿 프로 무료기간이 끝나버렸다
 publishedAt: 2025-11-14
-draft: true
+public: false
 ---
 
 3년전 부터 github의 [copilot](https://github.com/copilot)를 사용하였는데 이번에 라이센스가 갱신되면서 Pro에서 free로 내려갔다.
