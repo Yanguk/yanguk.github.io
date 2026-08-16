@@ -61,6 +61,7 @@
   --heading-1: var(--foreground);
   --heading-2: var(--foreground);
   --heading-3: var(--foreground);
+  --heading-4: var(--foreground);
   --blockquote-text: oklch(45% 0.018 260);
   --blockquote-border: var(--border);
   --code-background: oklch(92.5% 0.006 85);
@@ -138,6 +139,7 @@
   --heading-1: var(--foreground);
   --heading-2: var(--foreground);
   --heading-3: var(--foreground);
+  --heading-4: var(--foreground);
   --blockquote-text: oklch(72% 0.01 85);
   --blockquote-border: var(--border);
   --code-background: oklch(25% 0.012 260);
@@ -207,6 +209,7 @@
   --color-heading-1: var(--heading-1);
   --color-heading-2: var(--heading-2);
   --color-heading-3: var(--heading-3);
+  --color-heading-4: var(--heading-4);
 
   /* blockquote colors */
   --color-blockquote-text: var(--blockquote-text);
@@ -273,6 +276,9 @@
   }
   h3 {
     color: var(--color-heading-3);
+  }
+  h4 {
+    color: var(--color-heading-4);
   }
   blockquote {
     color: var(--color-blockquote-text);

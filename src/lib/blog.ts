@@ -5,6 +5,7 @@ import { mdProcessor } from "@/lib/md-processor";
 import { type ContentModule, MetadataSchema } from "@/lib/schema";
 
 const contentPath = path.join(process.cwd(), "content");
+type MarkdownModule = { default: string };
 
 export function getBlogSlugs() {
   const dir = path.join(contentPath, "blog");
@@ -15,9 +16,7 @@ export function getBlogSlugs() {
     .map((file) => path.basename(file, path.extname(file)));
 }
 
-const importContent = async (filePath: string): Promise<ContentModule> => {
-  const markdown = fs.readFileSync(filePath, "utf-8");
-
+const importContent = async (markdown: string): Promise<ContentModule> => {
   const { data, content } = matter(markdown);
   const metadata = MetadataSchema.parse(data);
 
@@ -33,11 +32,17 @@ const importContent = async (filePath: string): Promise<ContentModule> => {
 };
 
 export async function importBlogContent(slug: string): Promise<ContentModule> {
-  return await importContent(path.join(contentPath, "blog", `${slug}.md`));
+  const markdownModule = (await import(
+    `../../content/blog/${slug}.md`
+  )) as MarkdownModule;
+
+  return await importContent(markdownModule.default);
 }
 
 export async function importAboutContent(): Promise<ContentModule> {
-  return await importContent(path.join(contentPath, "about.md"));
+  const markdownModule = (await import("../../content/about.md")) as MarkdownModule;
+
+  return await importContent(markdownModule.default);
 }
 
 export async function getAllBlogContents() {
