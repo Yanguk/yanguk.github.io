@@ -44,5 +44,6 @@ export const mdProcessor = unified()
   .use(rehypePrism, {
     defaultLanguage: "js",
     ignoreMissing: true,
+    showLineNumbers: true,
   })
   .use(rehypeStringify, { allowDangerousHtml: true });
