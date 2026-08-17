@@ -22,6 +22,25 @@ const wrapCdata = (value: string) => {
   return `<![CDATA[${value.replaceAll("]]>", "]]]]><![CDATA[>")}]]>`;
 };
 
+const resolveImageUrls = (html: string, siteUrl: string) => {
+  return html.replace(
+    /(<img\b[^>]*\bsrc=["'])([^"']+)(["'])/gi,
+    (_, prefix, src, suffix) => {
+      if (
+        src.startsWith("http://") ||
+        src.startsWith("https://") ||
+        src.startsWith("data:")
+      ) {
+        return `${prefix}${src}${suffix}`;
+      }
+
+      const absoluteUrl = new URL(src, siteUrl).toString();
+
+      return `${prefix}${absoluteUrl}${suffix}`;
+    },
+  );
+};
+
 export async function GET() {
   const posts = await Promise.all(
     fs
@@ -64,15 +83,18 @@ export async function GET() {
   const items = publicPosts.map(({ htmlContent, metadata, slug }) => {
     const url = new URL(`/blog/${slug}`, siteUrl).toString();
 
+    const rssContent = resolveImageUrls(htmlContent, siteUrl);
+
     return `
-    <item>
-      <title>${escapeXml(metadata.title)}</title>
-      <link>${escapeXml(url)}</link>
-      <description>${escapeXml(metadata.title)}</description>
-      <guid isPermaLink="true">${escapeXml(url)}</guid>
-      <pubDate>${metadata.publishedAt.toUTCString()}</pubDate>
-      <content:encoded>${wrapCdata(htmlContent)}</content:encoded>
-    </item>`;
+      <item>
+        <title>${escapeXml(metadata.title)}</title>
+        <link>${escapeXml(url)}</link>
+        <description>${escapeXml(metadata.title)}</description>
+        <guid isPermaLink="true">${escapeXml(url)}</guid>
+        <pubDate>${metadata.publishedAt.toUTCString()}</pubDate>
+        <content:encoded>${wrapCdata(rssContent)}</content:encoded>
+      </item>
+    `.trim();
   });
 
   const rss = `
