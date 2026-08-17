@@ -6,21 +6,18 @@ export const dynamic = "force-static";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const posts = await getAllBlogContents();
+  const siteUrl = siteMetadata.siteUrl;
 
-  const routes = ["", "blog"].map((route) => ({
-    url: `${siteMetadata.siteUrl}/${route}`,
+  const routes = ["/", "/blog"].map((route) => ({
+    url: new URL(route, siteUrl).toString(),
     lastModified: new Date().toISOString(),
   }));
 
   const blogRoutes = posts
-    .filter(({ metadata }) => !metadata.public)
     .map(({ metadata, slug }) => {
-      const date = new Date(metadata.publishedAt);
-      const hours = date.getHours();
-
       return {
-        url: `${siteMetadata.siteUrl}/blog/${slug}`,
-        lastModified: new Date(date.setHours(hours - 9)).toISOString(),
+        url: new URL(`/blog/${slug}`, siteUrl).toString(),
+        lastModified: metadata.publishedAt.toISOString(),
       };
     });
 

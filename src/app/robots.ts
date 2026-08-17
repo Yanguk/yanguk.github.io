@@ -4,12 +4,14 @@ import { siteMetadata } from "@/site-meta-data";
 export const dynamic = "force-static";
 
 export default function robots(): MetadataRoute.Robots {
+  const siteUrl = siteMetadata.siteUrl;
+
   return {
     rules: {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: `${siteMetadata.siteUrl}/sitemap.xml`,
-    host: siteMetadata.siteUrl,
+    sitemap: new URL("/sitemap.xml", siteUrl).toString(),
+    host: siteUrl,
   };
 }
