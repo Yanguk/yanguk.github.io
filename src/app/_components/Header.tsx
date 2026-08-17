@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import CustomLink from "@/app/_components/Link";
 import { ThemeToggle } from "@/app/_components/ThemeToggle";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { ROUTES } from "@/constants";
 import { cn } from "@/lib/utils";
 import { siteMetadata } from "@/site-meta-data";
 
@@ -12,8 +13,8 @@ export default function Header() {
   const curNav = pathname.slice(1).split("/").shift();
 
   const menus = [
-    { href: "/", label: "About" },
-    { href: "/blog", label: "Blog" },
+    { href: ROUTES.HOME, label: "About" },
+    { href: ROUTES.BLOG, label: "Blog" },
   ];
 
   return (
@@ -24,7 +25,7 @@ export default function Header() {
       <Avatar
         className="mb-3 size-10 after:border-none"
         render={
-          <CustomLink href="/" aria-label={siteMetadata.headerTitle}>
+          <CustomLink href={ROUTES.HOME} aria-label={siteMetadata.headerTitle}>
             <AvatarFallback className="bg-foreground font-backyard text-background">
               YU
             </AvatarFallback>

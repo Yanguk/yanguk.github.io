@@ -1,4 +1,5 @@
 import CustomLink from "@/app/_components/Link";
+import { ROUTES } from "@/constants";
 import { getAllBlogContents } from "@/lib/blog";
 
 export const dynamicParams = false;
@@ -20,7 +21,7 @@ export default async function Page() {
         <CustomLink
           className="hover:opacity-85"
           key={slug}
-          href={`/blog/${slug}`}
+          href={ROUTES.BLOG_POST(slug)}
         >
           <p className="wrap-break-word font-semibold text-base text-heading-1 md:text-lg">
             {metadata.title}

@@ -1,4 +1,5 @@
 import SocialIcon from "@/components/social-icons";
+import { ROUTES } from "@/constants";
 import { siteMetadata } from "@/site-meta-data";
 
 export default function Footer() {
@@ -15,7 +16,10 @@ export default function Footer() {
 
           <SocialIcon kind="github" href={siteMetadata.github} />
 
-          <SocialIcon kind="rss" href={`${siteMetadata.siteUrl}/rss.xml`} />
+          <SocialIcon
+            kind="rss"
+            href={`${siteMetadata.siteUrl}${ROUTES.RSS}`}
+          />
         </div>
       </div>
     </footer>

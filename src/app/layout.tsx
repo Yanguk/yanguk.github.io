@@ -8,6 +8,7 @@ import Header from "@/app/_components/Header";
 import { MdxLayout } from "@/app/_components/MdxLayout";
 import { MermaidInit } from "@/app/_components/MermaidInit";
 import { ThemeProvider } from "@/components/theme-provider";
+import { ROUTES } from "@/constants";
 import { allFontVariable } from "@/font";
 import { siteMetadata } from "@/site-meta-data";
 
@@ -16,7 +17,10 @@ export const metadata: Metadata = {
   description: siteMetadata.description,
   alternates: {
     types: {
-      "application/rss+xml": new URL("/rss.xml", siteMetadata.siteUrl).toString(),
+      "application/rss+xml": new URL(
+        ROUTES.RSS,
+        siteMetadata.siteUrl,
+      ).toString(),
     },
   },
 };

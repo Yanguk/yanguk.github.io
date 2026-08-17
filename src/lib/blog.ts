@@ -40,7 +40,9 @@ export async function importBlogContent(slug: string): Promise<ContentModule> {
 }
 
 export async function importAboutContent(): Promise<ContentModule> {
-  const markdownModule = (await import("../../content/about.md")) as MarkdownModule;
+  const markdownModule = (await import(
+    "../../content/about.md"
+  )) as MarkdownModule;
 
   return await importContent(markdownModule.default);
 }

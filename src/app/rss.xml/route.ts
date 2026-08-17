@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
+import { ROUTES } from "@/constants";
 import { mdProcessor } from "@/lib/md-processor";
 import { MetadataSchema } from "@/lib/schema";
 import { siteMetadata } from "@/site-meta-data";
@@ -81,7 +82,7 @@ export async function GET() {
   const latestPostDate = publicPosts.at(0)?.metadata.publishedAt ?? new Date();
 
   const items = publicPosts.map(({ htmlContent, metadata, slug }) => {
-    const url = new URL(`/blog/${slug}`, siteUrl).toString();
+    const url = new URL(ROUTES.BLOG_POST(slug), siteUrl).toString();
 
     const rssContent = resolveImageUrls(htmlContent, siteUrl);
 

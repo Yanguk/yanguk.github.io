@@ -1,8 +1,8 @@
 "use client";
 
 import mermaid from "mermaid";
-import { useTheme } from "next-themes";
 import { usePathname } from "next/navigation";
+import { useTheme } from "next-themes";
 import { useEffect } from "react";
 
 export function MermaidInit() {
