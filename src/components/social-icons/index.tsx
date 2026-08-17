@@ -7,6 +7,7 @@ import {
   Mail,
   Mastodon,
   Medium,
+  Rss,
   Threads,
   Twitter,
   X,
@@ -26,6 +27,7 @@ const components = {
   instagram: Instagram,
   medium: Medium,
   bluesky: Bluesky,
+  rss: Rss,
 };
 
 type SocialIconProps = {

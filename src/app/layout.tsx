@@ -14,6 +14,11 @@ import { siteMetadata } from "@/site-meta-data";
 export const metadata: Metadata = {
   title: siteMetadata.title,
   description: siteMetadata.description,
+  alternates: {
+    types: {
+      "application/rss+xml": new URL("/feed.xml", siteMetadata.siteUrl).toString(),
+    },
+  },
 };
 
 export default function RootLayout({

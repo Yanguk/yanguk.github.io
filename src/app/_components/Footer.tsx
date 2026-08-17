@@ -14,6 +14,8 @@ export default function Footer() {
           <SocialIcon kind="mail" href={`mailto:${siteMetadata.email}`} />
 
           <SocialIcon kind="github" href={siteMetadata.github} />
+
+          <SocialIcon kind="rss" href={`${siteMetadata.siteUrl}/rss.xml`} />
         </div>
       </div>
     </footer>

@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "bun run generate:feed && next build",
     "start": "next start",
+    "generate:feed": "bun scripts/generate-feed.ts",
     "clean": "git clean -fdx",
     "lint": "biome lint",
     "format": "biome format --write",
