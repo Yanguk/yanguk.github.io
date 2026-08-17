@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "bun run generate:feed && next build",
+    "build": "next build",
     "start": "next start",
     "generate:feed": "bun scripts/generate-feed.ts",
     "clean": "git clean -fdx",
