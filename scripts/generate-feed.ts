@@ -6,7 +6,7 @@ import { MetadataSchema } from "../src/lib/schema";
 import { siteMetadata } from "../src/site-meta-data";
 
 const contentPath = path.join(process.cwd(), "content", "blog");
-const feedPath = path.join(process.cwd(), "public", "feed.xml");
+const feedPath = path.join(process.cwd(), "public", "rss.xml");
 
 const escapeXml = (value: string) => {
   return value
@@ -54,7 +54,7 @@ const publicPosts = posts
   });
 
 const siteUrl = siteMetadata.siteUrl;
-const feedUrl = new URL("/feed.xml", siteUrl).toString();
+const feedUrl = new URL("/rss.xml", siteUrl).toString();
 const latestPostDate = publicPosts.at(0)?.metadata.publishedAt ?? new Date();
 
 const items = publicPosts.map(({ htmlContent, metadata, slug }) => {
