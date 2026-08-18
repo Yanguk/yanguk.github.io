@@ -17,8 +17,8 @@ export const metadata: Metadata = {
   description: siteMetadata.description,
   alternates: {
     types: {
-      "application/rss+xml": new URL(
-        ROUTES.RSS,
+      "application/atom+xml": new URL(
+        ROUTES.FEED,
         siteMetadata.siteUrl,
       ).toString(),
     },

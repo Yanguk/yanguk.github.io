@@ -81,51 +81,63 @@ export async function GET() {
   const feedUrl = new URL("/feed.xml", siteUrl).toString();
   const latestPostDate = publicPosts.at(0)?.metadata.publishedAt ?? new Date();
 
-  const items = publicPosts.map(({ htmlContent, metadata, slug }) => {
+  const entries = publicPosts.map(({ htmlContent, metadata, slug }) => {
     const url = new URL(ROUTES.BLOG_POST(slug), siteUrl).toString();
+    const updatedAt = metadata.publishedAt.toISOString();
 
-    const rssContent = resolveImageUrls(htmlContent, siteUrl);
+    const atomContent = resolveImageUrls(htmlContent, siteUrl);
 
     return `
-      <item>
+      <entry>
         <title>${escapeXml(metadata.title)}</title>
-        <link>${escapeXml(url)}</link>
-        <description>${escapeXml(metadata.title)}</description>
-        <guid isPermaLink="true">${escapeXml(url)}</guid>
-        <pubDate>${metadata.publishedAt.toUTCString()}</pubDate>
-        <content:encoded>${wrapCdata(rssContent)}</content:encoded>
-      </item>
+
+        <link
+          href="${escapeXml(url)}"
+          rel="alternate"
+          type="text/html"
+        />
+
+        <id>${escapeXml(url)}</id>
+
+        <published>${updatedAt}</published>
+        <updated>${updatedAt}</updated>
+
+        <content type="html">${wrapCdata(atomContent)}</content>
+      </entry>
     `.trim();
   });
 
-  const rss = `
-<?xml version="1.0" encoding="UTF-8" ?>
-<rss
-  version="2.0"
-  xmlns:atom="http://www.w3.org/2005/Atom"
-  xmlns:content="http://purl.org/rss/1.0/modules/content/"
->
-  <channel>
-    <title>${escapeXml(siteMetadata.title)}</title>
-    <link>${escapeXml(siteUrl)}</link>
-    <description>${escapeXml(siteMetadata.description)}</description>
-    <language>ko</language>
+  const atom = `
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>${escapeXml(siteMetadata.title)}</title>
 
-    <lastBuildDate>${latestPostDate.toUTCString()}</lastBuildDate>
-    <atom:link
-      href="${escapeXml(feedUrl)}"
-      rel="self"
-      type="application/rss+xml"
-    />
+  <link
+    href="${escapeXml(siteUrl)}"
+    rel="alternate"
+    type="text/html"
+  />
 
-    ${items.join("")}
-  </channel>
-</rss>
+  <link
+    href="${escapeXml(feedUrl)}"
+    rel="self"
+    type="application/atom+xml"
+  />
+
+  <id>${escapeXml(siteUrl)}</id>
+
+  <updated>${latestPostDate.toISOString()}</updated>
+
+  <subtitle>${escapeXml(siteMetadata.description)}</subtitle>
+  <lang>ko</lang>
+
+  ${entries.join("\n")}
+</feed>
 `.trim();
 
-  return new Response(rss, {
+  return new Response(atom, {
     headers: {
-      "Content-Type": "application/rss+xml; charset=utf-8",
+      "Content-Type": "application/atom+xml; charset=utf-8",
     },
   });
 }

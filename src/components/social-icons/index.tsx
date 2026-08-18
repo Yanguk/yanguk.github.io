@@ -1,13 +1,13 @@
 import {
   Bluesky,
   Facebook,
+  Feed,
   Github,
   Instagram,
   Linkedin,
   Mail,
   Mastodon,
   Medium,
-  Rss,
   Threads,
   Twitter,
   X,
@@ -27,7 +27,7 @@ const components = {
   instagram: Instagram,
   medium: Medium,
   bluesky: Bluesky,
-  rss: Rss,
+  feed: Feed,
 };
 
 type SocialIconProps = {
